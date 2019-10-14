@@ -1,0 +1,862 @@
+fileFormatVersion: 2
+guid: 4b457d97cc7a23a4aa133085ec4035bc
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Protagonist - sprite sheet - incomplete - High res_0
+    21300002: Protagonist - sprite sheet - incomplete - High res_1
+    21300004: Protagonist - sprite sheet - incomplete - High res_2
+    21300006: Protagonist - sprite sheet - incomplete - High res_3
+    21300008: Protagonist - sprite sheet - incomplete - High res_4
+    21300010: Protagonist - sprite sheet - incomplete - High res_5
+    21300012: Protagonist - sprite sheet - incomplete - High res_6
+    21300014: Protagonist - sprite sheet - incomplete - High res_7
+    21300016: Protagonist - sprite sheet - incomplete - High res_8
+    21300018: Protagonist - sprite sheet - incomplete - High res_9
+    21300020: Protagonist - sprite sheet - incomplete - High res_10
+    21300022: Protagonist - sprite sheet - incomplete - High res_11
+    21300024: Protagonist - sprite sheet - incomplete - High res_12
+    21300026: Protagonist - sprite sheet - incomplete - High res_13
+    21300028: Protagonist - sprite sheet - incomplete - High res_14
+    21300030: Protagonist - sprite sheet - incomplete - High res_15
+    21300032: Protagonist - sprite sheet - incomplete - High res_16
+    21300034: Protagonist - sprite sheet - incomplete - High res_17
+    21300036: Protagonist - sprite sheet - incomplete - High res_18
+    21300038: Protagonist - sprite sheet - incomplete - High res_19
+    21300040: Protagonist - sprite sheet - incomplete - High res_20
+    21300042: Protagonist - sprite sheet - incomplete - High res_21
+    21300044: Protagonist - sprite sheet - incomplete - High res_22
+    21300046: Protagonist - sprite sheet - incomplete - High res_23
+    21300048: Protagonist - sprite sheet - incomplete - High res_24
+    21300050: Protagonist - sprite sheet - incomplete - High res_25
+    21300052: Protagonist - sprite sheet - incomplete - High res_26
+    21300054: Protagonist - sprite sheet - incomplete - High res_27
+    21300056: Protagonist - sprite sheet - incomplete - High res_28
+    21300058: Protagonist - sprite sheet - incomplete - High res_29
+    21300060: Protagonist - sprite sheet - incomplete - High res_30
+    21300062: Protagonist - sprite sheet - incomplete - High res_31
+    21300064: Protagonist - sprite sheet - incomplete - High res_32
+    21300066: Protagonist - sprite sheet - incomplete - High res_33
+    21300068: Protagonist - sprite sheet - incomplete - High res_34
+    21300070: Protagonist - sprite sheet - incomplete - High res_35
+  externalObjects: {}
+  serializedVersion: 5
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 550
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4350
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66a03c2137c051b4f856daf5f661c549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_1
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 4350
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b0f9c1a4b006254aac9c870fa3d42c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_2
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 4350
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b7d95d97a27194e9768d54819ca709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_3
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 4350
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf699e7c8efd9d64b8aa6efef7a333a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_4
+      rect:
+        serializedVersion: 2
+        x: 3560
+        y: 4350
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09f732f23ffe5bc46a615aa9c29b899f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_5
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 4350
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6ce3a9e7b79ef94fb76e755cfe43005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3480
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc4849610dab0a944b5e70d32152d9dc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_7
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 3480
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cf3b375ec4df5140bf2eb3c7ecbcade
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_8
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 3480
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43ef6b6afa1e30e4790261025f4a4b24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_9
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 3480
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec0b7bf5675204e4d82a42ee820105fb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_10
+      rect:
+        serializedVersion: 2
+        x: 3560
+        y: 3480
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 197b17db2a67a3b43b062df282a1ae8d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_11
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 3480
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ac5f581508afe54d89fcb095d95db9d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2610
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c269f691da8ce754c81b1ed2691d2460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_13
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 2610
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ef7f71d024fac7489d06d81e817bc8e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_14
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 2610
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 357fddac1103e0146a9db475342dc8e0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_15
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 2610
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f028665a7c5f94b953cb260a0fe461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_16
+      rect:
+        serializedVersion: 2
+        x: 3560
+        y: 2610
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61a4db4682fcb8945a27f4e809acf755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_17
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 2610
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f22751e10ff7c33408fa3e2fbd2602d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1740
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d78b8ce93c9de3b4d9c7d352171ce31e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_19
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 1740
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64a201bedeadb4141b22b4ff0475a385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_20
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 1740
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ded20f7dc55f1d42adfbc93cfede094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_21
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 1740
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2816c30f4956c7641b5aadb28e3f7759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_22
+      rect:
+        serializedVersion: 2
+        x: 3560
+        y: 1740
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c5608a8b4d91941907fd121c7f613c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_23
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 1740
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0daa8d94b4770f740923434889db3991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 870
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 756068cb49fbcde43bdffcdd64cf80d1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_25
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 870
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a743cc03d7898247977d47d3f99e59f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_26
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 870
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea9a1da5375a760429ba09ed70c798c7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_27
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 870
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db3dd8513c2b0b84caa71af994a0e625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_28
+      rect:
+        serializedVersion: 2
+        x: 3560
+        y: 870
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 892c9f9b0c4e96a40aec66e7532c7afc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_29
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 870
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b03fcb8bdfa564c48b5f17f07a1b2555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f19f2b21618f254f81c79d9d535227f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_31
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 0
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae1d561b3a213054bae7e729ac86cb56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_32
+      rect:
+        serializedVersion: 2
+        x: 1780
+        y: 0
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf9078e2e18839e4788029f502a0ef46
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_33
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 0
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32cbe79b828944444a89c956c61555f7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_34
+      rect:
+        serializedVersion: 2
+        x: 3560
+        y: 0
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5e0b94999ac9d34991326285679b04c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Protagonist - sprite sheet - incomplete - High res_35
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 0
+        width: 890
+        height: 870
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c8c89329040d6d4688a5dab1d135247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: a7c282fefe6a9f8419e7c71c7fcf0491
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

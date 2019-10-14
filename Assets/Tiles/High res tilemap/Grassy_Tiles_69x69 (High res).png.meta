@@ -1,0 +1,606 @@
+fileFormatVersion: 2
+guid: 53fb7d9fa6b6ca34297eaf77f3395baa
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Grassy_Tiles_69x69 (High res)_0
+    21300002: Grassy_Tiles_69x69 (High res)_1
+    21300004: Grassy_Tiles_69x69 (High res)_2
+    21300006: Grassy_Tiles_69x69 (High res)_3
+    21300008: Grassy_Tiles_69x69 (High res)_4
+    21300010: Grassy_Tiles_69x69 (High res)_5
+    21300012: Grassy_Tiles_69x69 (High res)_6
+    21300014: Grassy_Tiles_69x69 (High res)_7
+    21300016: Grassy_Tiles_69x69 (High res)_8
+    21300018: Grassy_Tiles_69x69 (High res)_9
+    21300020: Grassy_Tiles_69x69 (High res)_10
+    21300022: Grassy_Tiles_69x69 (High res)_11
+    21300024: Grassy_Tiles_69x69 (High res)_12
+    21300026: Grassy_Tiles_69x69 (High res)_13
+    21300028: Grassy_Tiles_69x69 (High res)_14
+    21300030: Grassy_Tiles_69x69 (High res)_15
+    21300032: Grassy_Tiles_69x69 (High res)_16
+    21300034: Grassy_Tiles_69x69 (High res)_17
+    21300036: Grassy_Tiles_69x69 (High res)_18
+    21300038: Grassy_Tiles_69x69 (High res)_19
+  externalObjects: {}
+  serializedVersion: 5
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 690
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2760
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -255, y: 305}
+        - {x: -274, y: 236}
+        - {x: 342, y: 248}
+        - {x: 345, y: 305}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2201ac5b0fcc6b940809136f7006aed0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_1
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 2760
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 305}
+        - {x: -345, y: 220}
+        - {x: 345, y: 225}
+        - {x: 345, y: 305}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2f154d86469ac14aaa4616462c98698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_2
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 2760
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 305}
+        - {x: -345, y: 244}
+        - {x: 273, y: 240}
+        - {x: 255, y: 305}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83aa93798743cfb4f9a77a9e3a44e9cb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_3
+      rect:
+        serializedVersion: 2
+        x: 2070
+        y: 2760
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 345}
+        - {x: -345, y: -345}
+        - {x: -337, y: -338}
+        - {x: -237, y: -140}
+        - {x: -171, y: 7}
+        - {x: -94, y: 208}
+        - {x: -13, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f57e799adb577a045bd284c65eac0ce3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2070
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec8d508e64a08be46b3c1a88bce90870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_5
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 2070
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 274, y: 212}
+        - {x: 256, y: 295}
+        - {x: -345, y: 295}
+        - {x: -345, y: 223}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87fb8d0d235ae23419e95a829560cd4a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_6
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 2070
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 345, y: 185}
+        - {x: 345, y: 295}
+        - {x: -295, y: -345}
+        - {x: -197, y: -345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8359cdf6e77159846962a2293bd93b84
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_7
+      rect:
+        serializedVersion: 2
+        x: 2070
+        y: 2070
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 295}
+        - {x: -345, y: 205}
+        - {x: 198, y: -345}
+        - {x: 295, y: -345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64446d07ac0504c49a41d0a530d2b5ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1380
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -246, y: 295}
+        - {x: -280, y: 258}
+        - {x: -278, y: 230}
+        - {x: 345, y: 232}
+        - {x: 345, y: 295}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 698aeaeecf6b21e42aaf8088514602fc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_9
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 1380
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 295}
+        - {x: -345, y: 246}
+        - {x: 345, y: 245}
+        - {x: 345, y: 295}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49237aa6e32ddcd4cb41e79cc5cb9a1b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_10
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 1380
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -295, y: 345}
+        - {x: -345, y: 295}
+        - {x: -345, y: 218}
+        - {x: -212, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8af7105e480c5a04486a614bade5aa4c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_11
+      rect:
+        serializedVersion: 2
+        x: 2070
+        y: 1380
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 237, y: 345}
+        - {x: 345, y: 243}
+        - {x: 345, y: 295}
+        - {x: 295, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed5d5e9156486b246921e8a2c75489ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 690
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 13, y: 345}
+        - {x: 114, y: 166}
+        - {x: 229, y: -62}
+        - {x: 296, y: -292}
+        - {x: 345, y: -345}
+        - {x: 345, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2223674a69b155458f217ad1320df4e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_13
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 690
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b575dc91b61964046ab35032bf6402b6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_14
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 690
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8b59f32181208e479e6864e91b2e3ad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_15
+      rect:
+        serializedVersion: 2
+        x: 2070
+        y: 690
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 310, y: 342}
+        - {x: 310, y: -345}
+        - {x: 345, y: -345}
+        - {x: 345, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20340e3195c3a004a86b3298c3c60fc8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 345}
+        - {x: -345, y: -345}
+        - {x: -263, y: -345}
+        - {x: -304, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad666cbcd0caadb4bbe8659c4e52c7ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_17
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 0
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: 345}
+        - {x: -316, y: 76}
+        - {x: -280, y: -86}
+        - {x: -220, y: -326}
+        - {x: -88, y: -345}
+        - {x: -166, y: -272}
+        - {x: -297, y: 345}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f6b79c0b8a368641ba4e93c38267712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_18
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 0
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: -280}
+        - {x: -345, y: -315}
+        - {x: -29, y: -331}
+        - {x: 200, y: -333}
+        - {x: 343, y: -311}
+        - {x: 345, y: -283}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ee17f64afa0914418a7f7d3af2c6a30
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassy_Tiles_69x69 (High res)_19
+      rect:
+        serializedVersion: 2
+        x: 2070
+        y: 0
+        width: 690
+        height: 690
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -345, y: -280}
+        - {x: -345, y: -323}
+        - {x: -314, y: -345}
+        - {x: 246, y: -327}
+        - {x: 275, y: -275}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0bd30737e3e95347837651ab3442fa4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2eac8f9ccfbedf2428bb923dd3ce8830
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
