@@ -201,7 +201,8 @@ public class Player : MonoBehaviour {
             if (IsGrounded())
             {
                 bool playerHasHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
-                myAnimator.SetBool("isRunning", playerHasHorizontalVelocity);
+                bool isPressingMoveButtons = leftButton || altLeftButton || rightButton || altRightButton;
+                myAnimator.SetBool("isRunning", playerHasHorizontalVelocity || isPressingMoveButtons);
             }
         }
     }
@@ -210,7 +211,7 @@ public class Player : MonoBehaviour {
     // Jumps only if grounded
     private void Jump()
     {
-        if (IsGrounded() && isJumpAvailable)
+        if (IsGrounded() && isJumpAvailable) 
         {
             if (jumpQueue.Count > 0)
             {
@@ -251,7 +252,6 @@ public class Player : MonoBehaviour {
         
         if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && rayCastHit.distance > distanceThresholdForFalling)
         {
-            // Debug.Log("Player rigidbody velocity : " + myRigidBody.velocity);
             myAnimator.SetBool("isRunning", false);
             myAnimator.SetBool("isJumping", false);
             myAnimator.SetBool("isFalling", true);
@@ -333,8 +333,10 @@ public class Player : MonoBehaviour {
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
             var jumpVelocity = new Vector2(0f, jumpForceFromRope);
             myRigidBody.velocity = jumpVelocity;
+            jumpQueue = new ArrayList();
         }
     }
+
     // Used when the player initializes rope climbing
     private void StartClimbing()
     {
@@ -353,11 +355,12 @@ public class Player : MonoBehaviour {
     private void Shoot()
     {
         bool isFalling = myAnimator.GetBool("isFalling");
+        bool isJumping = myAnimator.GetBool("isJumping");
 
         if (isShootingAvailable && !isClimbing)
         {
             // Case - shoot on ground
-            if (shotQueue.Count > 0 && IsGrounded()) // && Mathf.Abs(velocity) < Mathf.Epsilon)
+            if (shotQueue.Count > 0 && IsGrounded() && !isJumping) // && Mathf.Abs(velocity) < Mathf.Epsilon)
             {
                 StartCoroutine(JumpCoolDown());
                 StartCoroutine(ShotCoolDown());

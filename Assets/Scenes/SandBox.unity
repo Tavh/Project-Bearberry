@@ -539,6 +539,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2113883505422176352, guid: 7557c6b8302e5cd4facdf7d4f2590804,
+        type: 2}
+      propertyPath: m_UsedByEffector
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7557c6b8302e5cd4facdf7d4f2590804, type: 2}
   m_IsPrefabParent: 0
@@ -746,7 +751,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1019273854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2392646, y: -1.362, z: 0}
+  m_LocalPosition: {x: -0.22235036, y: -1.362, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 225996252}
@@ -806,7 +811,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1026358222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2392646, y: -1.362, z: 0}
+  m_LocalPosition: {x: -0.22235036, y: -1.362, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 245377163}
@@ -1219,6 +1224,29 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69b2604b562610944b5b6cf592b5e6fd, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1729268238 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1924281923868282, guid: 7557c6b8302e5cd4facdf7d4f2590804,
+    type: 2}
+  m_PrefabInternal: {fileID: 735448198}
+--- !u!251 &1729268244
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1729268238}
+  m_Enabled: 1
+  m_UseColliderMask: 0
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 150
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 0
 --- !u!1001 &1768961630
 Prefab:
   m_ObjectHideFlags: 0
@@ -1300,15 +1328,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114043447090701116, guid: 74c239089f764774e9ddc7960f173365,
+    - target: {fileID: 50112491369568136, guid: 74c239089f764774e9ddc7960f173365,
         type: 2}
-      propertyPath: countJumpAsExecutableDuration
-      value: 0.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 114043447090701116, guid: 74c239089f764774e9ddc7960f173365,
-        type: 2}
-      propertyPath: countShotAsExecutableDuration
-      value: 0.14
+      propertyPath: m_GravityScale
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74c239089f764774e9ddc7960f173365, type: 2}
