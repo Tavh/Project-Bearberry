@@ -77,7 +77,6 @@ public class Player : MonoBehaviour {
     [SerializeField] bool isClimbing;
     [SerializeField] bool isInvincible;
     [SerializeField] bool isHit;
-    [SerializeField] bool isGrounded;
 
     [SerializeField] float timePassedSinceShotPressed;
     [SerializeField] float timePassedSinceJumpPressed;
@@ -101,8 +100,6 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        isGrounded = IsGrounded();
-
         CheckButtonInput();
 
         Move();
