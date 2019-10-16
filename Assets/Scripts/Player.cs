@@ -5,34 +5,22 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour {
 
-    // ------------------------------------------ Class variables ------------------------------------------
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Configuration parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Player health
     [SerializeField] int health = 5;
-    // Player run speed
     [SerializeField] float runSpeed = 5f;
-    // Player jump force
     [SerializeField] float jumpForce = 5f;
-    // Player jump force when jumping off a rope
     [SerializeField] float jumpForceFromRope;
     // At what falling speed should the player switch to falling animation
     [SerializeField] float speedThresholdForFalling = -0.5f;
     // At what distance from the ground should the player switch to falling animation
     [SerializeField] float distanceThresholdForFalling = 0.3f;
-    // Cooldown duration after jumping
     [SerializeField] float jumpCooldown = 0.3f;
-    // Cooldown duration after shooting
     [SerializeField] float shotCooldown = 1f;
-    // How hard should the player be knocked upwards when shooting downwards while airborne
     [SerializeField] float knockUpwardsFactor = 18;
-    // How hard should the player be knocked back when shooting
     [SerializeField] float shootKnockBackFactor = 0.2f;
-    // How hard should the player be knocked back when shooting while airborne
     [SerializeField] float knockbackFactorAir = 0.2f;
-    // Cooldown for the knock upwards the player receives when shooting downwards while airborne
     [SerializeField] float knockUpwardsCooldown = 0.3f;
-    // Cooldown for climbing, prevents bugs and loops
     [SerializeField] float climbCoolDown = 0.3f;
     // How far from a wall should the character stop being knocked back when shooting
     [SerializeField] float distanceToRaycastKnockback = 0.5f;
@@ -49,8 +37,8 @@ public class Player : MonoBehaviour {
     // How long the player is immune from hits after being hit
     [SerializeField] float invincibilityDuration = 2f;
 
-    [SerializeField] float countJumpAsExecutableDuration = 0.15f;
-    [SerializeField] float countShotAsExecutableDuration = 0.15f;
+    [SerializeField] float maxTimeToKeepTrackOfLastJumpAttempt = 0.15f;
+    [SerializeField] float maxTimeToKeepTrackOfLastShotAttempt = 0.15f;
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GameObject references ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,8 +129,6 @@ public class Player : MonoBehaviour {
         jumpButton = Input.GetKeyDown(KeyCode.Z);
         shotButton = Input.GetKeyDown(KeyCode.X);
     }
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GETTERS AND SETTERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     private void FlipSprite()
     {
         if (!isClimbing)
@@ -159,15 +145,6 @@ public class Player : MonoBehaviour {
                 transform.localScale = new Vector2(-1f, 1f);
             }
         }
-
-        /*
-        bool playerHasHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
-        if (playerHasHorizontalVelocity)
-        {
-            Debug.Log(myRigidBody.velocity);
-            transform.localScale = new Vector2(Mathf.Sign(myRigidBody.velocity.x), 1f);
-            return;
-        } */
     }
 
     private bool IsGrounded()
@@ -202,13 +179,13 @@ public class Player : MonoBehaviour {
             }
         }
     }
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ JUMP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     private void Jump()
     {
         timePassedSinceJumpPressed -= Time.deltaTime;
         if (jumpButton)
         {
-            timePassedSinceJumpPressed = countJumpAsExecutableDuration;
+            timePassedSinceJumpPressed = maxTimeToKeepTrackOfLastJumpAttempt;
         }
 
         if (IsGrounded() && isJumpAvailable) 
@@ -233,7 +210,6 @@ public class Player : MonoBehaviour {
         isJumpAvailable = true;
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FALL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Detects if the player is falling
     private void Fall ()
     {
@@ -247,7 +223,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LAND ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Detects if the player landed on an object that is tagged "Ground"
     private void Land()
     {
@@ -270,8 +245,6 @@ public class Player : MonoBehaviour {
             myAnimator.SetBool("isCrouching", false);
         }
     }
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CLIMB ROPE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private void ClimbRope()
     {
@@ -342,8 +315,6 @@ public class Player : MonoBehaviour {
         myAnimator.SetBool("isClimbing", true);
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SHOOT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
     private void Shoot()
     {
         bool isFalling = myAnimator.GetBool("isFalling");
@@ -352,12 +323,12 @@ public class Player : MonoBehaviour {
         timePassedSinceShotPressed -= Time.deltaTime;
         if (shotButton)
         {
-            timePassedSinceShotPressed = countShotAsExecutableDuration;
+            timePassedSinceShotPressed = maxTimeToKeepTrackOfLastShotAttempt;
         }
 
         if (isShootingAvailable && !isClimbing)
         {
-            // Case - shoot on ground
+            // Shoot on ground
             if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // && Mathf.Abs(velocity) < Mathf.Epsilon)
             {
                 StartCoroutine(JumpCoolDown());
@@ -367,7 +338,7 @@ public class Player : MonoBehaviour {
                 timePassedSinceShotPressed = 0;
             }
 
-            // Case - shoot in air downwards
+            // Shoot in air downwards
             else if ((downButton || altDownButton) && timePassedSinceShotPressed > 0 && !IsGrounded())
             {
                 StartCoroutine(ShotCoolDown());
@@ -375,7 +346,7 @@ public class Player : MonoBehaviour {
                 timePassedSinceShotPressed = 0;
             }
 
-            // Case - shoot in air
+            // Shoot in air
             else if (timePassedSinceShotPressed > 0 && !IsGrounded() && !isFalling)
             {
                 StartCoroutine(ShotCoolDown());
@@ -480,8 +451,6 @@ public class Player : MonoBehaviour {
             bullet.SetDireciton(bulletDirection);
         }
     }
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public void SetIsGroundedInAnimator()
     {
