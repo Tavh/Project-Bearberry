@@ -6,7 +6,6 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Player : MonoBehaviour {
 
     // ------------------------------------------ Class variables ------------------------------------------
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Configuration parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // Player health
@@ -495,6 +494,7 @@ public class Player : MonoBehaviour {
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     public void SetIsGroundedInAnimator()
     {
         myAnimator.SetBool("isGrounded", IsGrounded());
