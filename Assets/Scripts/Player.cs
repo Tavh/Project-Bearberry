@@ -143,16 +143,18 @@ public class Player : MonoBehaviour {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GETTERS AND SETTERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Always checks the player's input and flips the sprite towards the right direction
     private void FlipSprite()
     {
         if (!isClimbing)
         {
-            if ((rightButton || altRightButton) && !leftButton && !altLeftButton)
+            bool isPressingRight = rightButton || altRightButton;
+            bool isPressingLeft = leftButton || altLeftButton;
+
+            if (isPressingRight && !isPressingLeft)
             {
                 transform.localScale = new Vector2(1f, 1f);
             }
-            else if ((leftButton || altLeftButton) && !rightButton && !altRightButton)
+            else if (isPressingLeft && !isPressingRight)
             {
                 transform.localScale = new Vector2(-1f, 1f);
             }
@@ -168,9 +170,8 @@ public class Player : MonoBehaviour {
         } */
     }
 
-    // Detects if the player is touching the ground or not
     private bool IsGrounded()
-    {
+    { 
         RaycastHit2D rayCastHit = Physics2D.Raycast(transform.position, Vector2.down);
 
         bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"));
@@ -183,8 +184,6 @@ public class Player : MonoBehaviour {
         return false;
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MOVEMENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Character grounded movement
     private void Move()
     {
         if (!isShooting && !isHit)
@@ -203,9 +202,7 @@ public class Player : MonoBehaviour {
             }
         }
     }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ JUMP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Jumps only if grounded
     private void Jump()
     {
         timePassedSinceJumpPressed -= Time.deltaTime;
