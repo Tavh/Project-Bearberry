@@ -91,8 +91,9 @@ public class Player : MonoBehaviour {
     [SerializeField] bool isHit;
     [SerializeField] bool isGrounded;
 
-    [SerializeField] ArrayList jumpQueue = new ArrayList();
-    [SerializeField] ArrayList shotQueue = new ArrayList();
+    [SerializeField] float timePassedSinceShotPressed;
+    [SerializeField] float timePassedSinceJumpPressed;
+
 
     // ---------------------------------------------------- Methods -------------------------------------------------------------
 
@@ -139,22 +140,21 @@ public class Player : MonoBehaviour {
         altUpButton = Input.GetKey(KeyCode.W);
         jumpButton = Input.GetKeyDown(KeyCode.Z);
         shotButton = Input.GetKeyDown(KeyCode.X);
-
-        StartCoroutine(ManageJumpQueue());
-        StartCoroutine(ManageShotQueue());
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GETTERS AND SETTERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // Always checks the player's input and flips the sprite towards the right direction
     private void FlipSprite()
     {
         if (!isClimbing)
         {
-            if ((rightButton || altRightButton) && !leftButton && !altLeftButton)
+            bool isPressingRight = rightButton || altRightButton;
+            bool isPressingLeft = leftButton || altLeftButton;
+
+            if (isPressingRight && !isPressingLeft)
             {
                 transform.localScale = new Vector2(1f, 1f);
             }
-            else if ((leftButton || altLeftButton) && !rightButton && !altRightButton)
+            else if (isPressingLeft && !isPressingRight)
             {
                 transform.localScale = new Vector2(-1f, 1f);
             }
@@ -170,9 +170,8 @@ public class Player : MonoBehaviour {
         } */
     }
 
-    // Detects if the player is touching the ground or not
     private bool IsGrounded()
-    {
+    { 
         RaycastHit2D rayCastHit = Physics2D.Raycast(transform.position, Vector2.down);
 
         bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"));
@@ -185,8 +184,6 @@ public class Player : MonoBehaviour {
         return false;
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MOVEMENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Character grounded movement
     private void Move()
     {
         if (!isShooting && !isHit)
@@ -205,33 +202,26 @@ public class Player : MonoBehaviour {
             }
         }
     }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ JUMP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Jumps only if grounded
     private void Jump()
     {
+        timePassedSinceJumpPressed -= Time.deltaTime;
+        if (jumpButton)
+        {
+            timePassedSinceJumpPressed = countJumpAsExecutableDuration;
+        }
+
         if (IsGrounded() && isJumpAvailable) 
         {
-            if (jumpQueue.Count > 0)
+            if (timePassedSinceJumpPressed > 0)
             {
                 var jumpVelocity = new Vector2(0f, jumpForce);
                 myRigidBody.velocity = jumpVelocity;
                 myAnimator.SetBool("isRunning", false);
                 myAnimator.SetBool("isJumping", true);
                 StartCoroutine(JumpCoolDown());
-                jumpQueue = new ArrayList();
+                timePassedSinceJumpPressed = 0;
             }
-        }
-    }
-
-    private IEnumerator ManageJumpQueue()
-    {
-        if (jumpButton)
-        {
-            object jumpAttempt = new object();
-            jumpQueue.Add(jumpAttempt);
-            yield return new WaitForSeconds(countJumpAsExecutableDuration);
-            jumpQueue.Remove(jumpAttempt);
         }
     }
 
@@ -321,7 +311,10 @@ public class Player : MonoBehaviour {
 
     private void JumpOffRope()
     {
-        if (isClimbing && jumpButton && !upButton && !downButton && (((leftButton || altLeftButton) || (rightButton || altRightButton))))
+        bool isHoldingEitherRightOrLeftButton = ((leftButton || altLeftButton) ^ (rightButton || altRightButton));
+        bool isHoldingUpOrDownButton = upButton || downButton;
+
+        if (isClimbing && jumpButton && !isHoldingUpOrDownButton && isHoldingEitherRightOrLeftButton)
         {
             StartCoroutine(ClimbCoolDown());
             myAnimator.enabled = true;
@@ -332,7 +325,7 @@ public class Player : MonoBehaviour {
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
             var jumpVelocity = new Vector2(0f, jumpForceFromRope);
             myRigidBody.velocity = jumpVelocity;
-            jumpQueue = new ArrayList();
+            timePassedSinceJumpPressed = 0;
         }
     }
 
@@ -356,44 +349,39 @@ public class Player : MonoBehaviour {
         bool isFalling = myAnimator.GetBool("isFalling");
         bool isJumping = myAnimator.GetBool("isJumping");
 
+        timePassedSinceShotPressed -= Time.deltaTime;
+        if (shotButton)
+        {
+            timePassedSinceShotPressed = countShotAsExecutableDuration;
+        }
+
         if (isShootingAvailable && !isClimbing)
         {
             // Case - shoot on ground
-            if (shotQueue.Count > 0 && IsGrounded() && !isJumping) // && Mathf.Abs(velocity) < Mathf.Epsilon)
+            if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // && Mathf.Abs(velocity) < Mathf.Epsilon)
             {
                 StartCoroutine(JumpCoolDown());
                 StartCoroutine(ShotCoolDown());
                 StopMovement();
                 myAnimator.SetBool("isShooting", true);
-                shotQueue = new ArrayList();
+                timePassedSinceShotPressed = 0;
             }
 
             // Case - shoot in air downwards
-            else if ((downButton || altDownButton) && shotQueue.Count > 0 && !IsGrounded())
+            else if ((downButton || altDownButton) && timePassedSinceShotPressed > 0 && !IsGrounded())
             {
                 StartCoroutine(ShotCoolDown());
                 myAnimator.SetBool("isShootingAirborneDownwards", true);
-                shotQueue = new ArrayList();
+                timePassedSinceShotPressed = 0;
             }
 
             // Case - shoot in air
-            else if (shotQueue.Count > 0 && !IsGrounded() && !isFalling)
+            else if (timePassedSinceShotPressed > 0 && !IsGrounded() && !isFalling)
             {
                 StartCoroutine(ShotCoolDown());
                 myAnimator.SetBool("isShootingAirborne", true);
-                shotQueue = new ArrayList();
+                timePassedSinceShotPressed = 0;
             }
-        }
-    }
-
-    private IEnumerator ManageShotQueue()
-    {
-        if (shotButton)
-        {
-            object shotAttempt = new object();
-            shotQueue.Add(shotAttempt);
-            yield return new WaitForSeconds(countShotAsExecutableDuration);
-            shotQueue.Remove(shotAttempt);
         }
     }
 
