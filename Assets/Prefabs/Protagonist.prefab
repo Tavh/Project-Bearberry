@@ -185,8 +185,8 @@ MonoBehaviour:
   ropeCenterPadding: 0.025
   minimalDistanceFromGround: 1
   invincibilityDuration: 1
-  countJumpAsExecutableDuration: 0.15
-  countShotAsExecutableDuration: 0.15
+  maxTimeToKeepTrackOfLastJumpAttempt: 0.15
+  maxTimeToKeepTrackOfLastShotAttempt: 0.15
   bulletPrefab: {fileID: 114196403015028128, guid: 182769240767a2a49895c93d61bd3cdc,
     type: 2}
   gun: {fileID: 1763538114592680}
@@ -199,7 +199,8 @@ MonoBehaviour:
   isClimbing: 0
   isInvincible: 0
   isHit: 0
-  isGrounded: 0
+  timePassedSinceShotPressed: 0
+  timePassedSinceJumpPressed: 0
 --- !u!212 &212202470177057108
 SpriteRenderer:
   m_ObjectHideFlags: 1
