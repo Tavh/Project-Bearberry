@@ -185,7 +185,6 @@ public class Player : MonoBehaviour {
     { 
         RaycastHit2D rayCastHit = Physics2D.Raycast(transform.position, Vector2.down);
 
-        bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"));
         bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask(GROUND));
 
         if (isTouchingGround && rayCastHit.distance < this.minimalDistanceFromGround)
