@@ -5,41 +5,47 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour {
 
+    private const float JUMP_COOL_DOWN_VALUE = 0.1f;
+    
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Configuration parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    // ** IT'S A GOOD IDEA TO MATCH ALL THE INITIAL VALUES TO THE VALUES WE'RE ACTUALLY USING IN THE END **
 
+    // Not serialized because it's an important value that should be controlled through a constant value
+    float jumpCooldown = JUMP_COOL_DOWN_VALUE;
     [SerializeField] int health = 5;
     [SerializeField] float runSpeed = 5f;
-    [SerializeField] float jumpForce = 5f;
-    [SerializeField] float jumpForceFromRope;
+    [SerializeField] float jumpForce = 14f;
+    [SerializeField] float jumpForceFromRope = 7f;
     // At what falling speed should the player switch to falling animation
-    [SerializeField] float speedThresholdForFalling = -0.5f;
+    [SerializeField] float speedThresholdForFalling = -0.9f;
     // At what distance from the ground should the player switch to falling animation
-    [SerializeField] float distanceThresholdForFalling = 0.3f;
-    [SerializeField] float jumpCooldown = 0.3f;
-    [SerializeField] float shotCooldown = 1f;
-    [SerializeField] float knockUpwardsFactor = 18;
+    [SerializeField] float distanceThresholdForFalling = 2f;
+    [SerializeField] float shotCooldown = 0.35f;
+    [SerializeField] float knockUpwardsFactor = 10f;
     [SerializeField] float shootKnockBackFactor = 0.2f;
-    [SerializeField] float knockbackFactorAir = 0.2f;
+    [SerializeField] float knockbackFactorAir = 7f;
     [SerializeField] float knockUpwardsCooldown = 0.3f;
     [SerializeField] float climbCoolDown = 0.3f;
     // How far from a wall should the character stop being knocked back when shooting
     [SerializeField] float distanceToRaycastKnockback = 0.5f;
     // How fast the character climbs
-    [SerializeField] float climbingSpeed;
+    [SerializeField] float climbingSpeed = 2f;
     // Keeps the direction a projectile should fly at a given time
     Vector2 bulletDirection;
     // Keeps the center of the rope the character is climbing
     Vector2 ropeCenter;
     // Padding the received rope center to improve the visuals
-    [SerializeField] float ropeCenterPadding;
+    [SerializeField] float ropeCenterPadding = 0.025f;
     // Minimal distance from ground to determine if the character is grounded
-    [SerializeField] float minimalDistanceFromGround;
+    [SerializeField] float minimalDistanceFromGround = 1f;
     // How long the player is immune from hits after being hit
-    [SerializeField] float invincibilityDuration = 2f;
+    [SerializeField] float invincibilityDuration = 1f;
 
     [SerializeField] float maxTimeToKeepTrackOfLastJumpAttempt = 0.15f;
     [SerializeField] float maxTimeToKeepTrackOfLastShotAttempt = 0.15f;
-
+    // Helps detect falling off platform, ** SHOULD NEVER BE HIGHER THAN jumpCoolDown! **
+    [Range(0f, JUMP_COOL_DOWN_VALUE)] [SerializeField] float maxTimeToKeepTrackOfLastRunToFallAnimatorTransition = 0.05f;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GameObject references ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -80,7 +86,8 @@ public class Player : MonoBehaviour {
 
     [SerializeField] float timePassedSinceShotPressed;
     [SerializeField] float timePassedSinceJumpPressed;
-
+    // Helps detect falling off platform
+    [SerializeField] float timeSinceLastRunningAnimatorState;
 
     // ---------------------------------------------------- Methods -------------------------------------------------------------
 
@@ -103,12 +110,14 @@ public class Player : MonoBehaviour {
         CheckButtonInput();
 
         Move();
-        Jump();
+        CheckForJump();
         Fall();
         Shoot();
         Crouch();
         HandleSlope();
         ClimbRope();
+
+        CalculateTimeSinceLastRunningAnimatorState();
 
         SetIsGroundedInAnimator();
     }
@@ -177,7 +186,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void Jump()
+    private void CheckForJump()
     {
         timePassedSinceJumpPressed -= Time.deltaTime;
         if (jumpButton)
@@ -185,17 +194,35 @@ public class Player : MonoBehaviour {
             timePassedSinceJumpPressed = maxTimeToKeepTrackOfLastJumpAttempt;
         }
 
-        if (IsGrounded() && isJumpAvailable) 
+        if ((IsGrounded()) && isJumpAvailable) 
         {
-            if (timePassedSinceJumpPressed > 0)
-            {
-                var jumpVelocity = new Vector2(0f, jumpForce);
-                myRigidBody.velocity = jumpVelocity;
-                myAnimator.SetBool("isRunning", false);
-                myAnimator.SetBool("isJumping", true);
-                StartCoroutine(JumpCoolDown());
-                timePassedSinceJumpPressed = 0;
-            }
+            Jump();
+        }
+    }
+
+    private void Jump()
+    {
+        if (timePassedSinceJumpPressed > 0)
+        {
+            timePassedSinceJumpPressed = 0;
+            timeSinceLastRunningAnimatorState = 0;
+            var jumpVelocity = new Vector2(0f, jumpForce);
+            myRigidBody.velocity = jumpVelocity;
+            myAnimator.SetBool("isRunning", false);
+            myAnimator.SetBool("isJumping", true);
+            StartCoroutine(JumpCoolDown());
+        }
+    }
+
+    private void CalculateTimeSinceLastRunningAnimatorState()
+    {
+        timeSinceLastRunningAnimatorState -= Time.deltaTime;
+
+        bool isCurrentAnimatorStateRunning = myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Protagonist running"); 
+
+        if (isCurrentAnimatorStateRunning)
+        {
+            timeSinceLastRunningAnimatorState = maxTimeToKeepTrackOfLastRunToFallAnimatorTransition;
         }
     }
 
@@ -217,6 +244,12 @@ public class Player : MonoBehaviour {
             myAnimator.SetBool("isRunning", false);
             myAnimator.SetBool("isJumping", false);
             myAnimator.SetBool("isFalling", true);
+
+            if (timeSinceLastRunningAnimatorState > 0 && timePassedSinceJumpPressed > 0 && isJumpAvailable)
+            {
+                myAnimator.SetTrigger("jumpAfterFalling");
+                Jump();
+            }
         }
     }
 
