@@ -1328,11 +1328,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114043447090701116, guid: 74c239089f764774e9ddc7960f173365,
-        type: 2}
-      propertyPath: maxTimeToKeepTrackOfLastRunToFallAnimatorTransition
-      value: 0.05
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74c239089f764774e9ddc7960f173365, type: 2}
   m_IsPrefabParent: 0

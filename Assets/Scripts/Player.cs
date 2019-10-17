@@ -208,7 +208,6 @@ public class Player : MonoBehaviour {
             timeSinceLastRunningAnimatorState = 0;
             var jumpVelocity = new Vector2(0f, jumpForce);
             myRigidBody.velocity = jumpVelocity;
-            myAnimator.SetBool("isRunning", false);
             myAnimator.SetBool("isJumping", true);
             StartCoroutine(JumpCoolDown());
         }
@@ -241,7 +240,6 @@ public class Player : MonoBehaviour {
         
         if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && rayCastHit.distance > distanceThresholdForFalling)
         {
-            myAnimator.SetBool("isRunning", false);
             myAnimator.SetBool("isJumping", false);
             myAnimator.SetBool("isFalling", true);
 
@@ -310,9 +308,12 @@ public class Player : MonoBehaviour {
         }
         else
         {
+            if (isClimbing == true)
+            {
+                StartCoroutine(ClimbCoolDown());
+            }
             myAnimator.SetBool("isClimbing", false);
             isClimbing = false;
-            StartCoroutine(ClimbCoolDown());
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
         }
     }
