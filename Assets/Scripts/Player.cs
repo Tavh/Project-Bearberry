@@ -6,9 +6,10 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Player : MonoBehaviour {
 
     private const float JUMP_COOL_DOWN_VALUE = 0.1f;
-    
+    private const string IS_JUMPING_ANIMATOR_BOOLEAN= "isJumping";
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Configuration parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     // ** IT'S A GOOD IDEA TO MATCH ALL THE INITIAL VALUES TO THE VALUES WE'RE ACTUALLY USING IN THE END **
 
     // Not serialized because it's an important value that should be controlled through a constant value
@@ -329,7 +330,7 @@ public class Player : MonoBehaviour {
             myAnimator.enabled = true;
             isClimbing = false;
             myAnimator.SetBool("isJumping", true);
-            FlipSprite();
+            FlipSprite(); // This is invoked on purpose, if not, there's a small frame of facing another direction
             myAnimator.SetBool("isClimbing", false);
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
             var jumpVelocity = new Vector2(0f, jumpForceFromRope);
@@ -346,8 +347,8 @@ public class Player : MonoBehaviour {
         isClimbing = true;
         myAnimator.enabled = true;
         myRigidBody.bodyType = RigidbodyType2D.Kinematic;
-        myAnimator.SetBool("isJumping", false);
-        myAnimator.SetBool("isRunning", false);
+        // This line of code was here for a while but it's likely that it's unnecessary ~> myAnimator.SetBool("isJumping", false);
+        myAnimator.SetBool("isRunning", false); // Making sure that running is cancelled or it might be stuck in running animation on ladder
         myAnimator.SetBool("isClimbing", true);
     }
 
