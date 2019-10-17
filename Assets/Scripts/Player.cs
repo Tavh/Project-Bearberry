@@ -5,8 +5,35 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour {
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constants ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Important and re-occuring values
     private const float JUMP_COOL_DOWN_VALUE = 0.1f;
-    private const string IS_JUMPING_ANIMATOR_BOOLEAN= "isJumping";
+
+    // Animator variables
+    private const string IS_JUMPING_BOOLEAN = "isJumping";
+    private const string IS_RUNNING_BOOLEAN = "isRunning";
+    private const string IS_FALLING_BOOLEAN = "isFalling";
+    private const string IS_CLIMBING_BOOLEAN = "isClimbing";
+    private const string IS_SHOOTING_BOOLEAN = "isShooting";
+    private const string IS_CROUCHING_BOOLEAN = "isCrouching";
+    private const string IS_GROUNDED_BOOLEAN = "isGrounded";
+    private const string IS_SHOOTING_AIRBORNE_BOOLEAN = "isShootingAirborne";
+    private const string IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN = "isShootingAirborneDownwards";
+    private const string SPEED_FLOAT = "speed";
+    private const string JUMP_AFTER_FALLING_TRIGGER = "jumpAfterFalling";
+    private const string HIT_TRIGGER = "hit";
+
+    // Animator state names
+    private const string PROTAGONIST_RUNNING_STATE_NAME = "Protagonist running";
+
+    // Tags and layers
+    private const string GROUND = "Ground";
+    private const string ROPE = "Rope";
+
+    // ETC
+    private const string HORIZONTAL = "Horizontal";
+
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Configuration parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -159,6 +186,7 @@ public class Player : MonoBehaviour {
         RaycastHit2D rayCastHit = Physics2D.Raycast(transform.position, Vector2.down);
 
         bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask(GROUND));
 
         if (isTouchingGround && rayCastHit.distance < this.minimalDistanceFromGround)
         {
@@ -173,16 +201,16 @@ public class Player : MonoBehaviour {
         if (!isShooting && !isHit)
         {
             FlipSprite();
-            float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); // value is between 1 and -1
+            float controlThrow = CrossPlatformInputManager.GetAxis(HORIZONTAL); // Value is between 1 and -1
             Vector2 playerVelocity = new Vector2(controlThrow * runSpeed, myRigidBody.velocity.y);
             myRigidBody.velocity = playerVelocity;
-            myAnimator.SetFloat("speed", Mathf.Abs(controlThrow));
+            myAnimator.SetFloat(SPEED_FLOAT, Mathf.Abs(controlThrow));
 
             if (IsGrounded())
             {
                 bool playerHasHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
                 bool isPressingMoveButtons = leftButton || altLeftButton || rightButton || altRightButton;
-                myAnimator.SetBool("isRunning", playerHasHorizontalVelocity || isPressingMoveButtons);
+                myAnimator.SetBool(IS_RUNNING_BOOLEAN, playerHasHorizontalVelocity || isPressingMoveButtons);
             }
         }
     }
@@ -209,7 +237,7 @@ public class Player : MonoBehaviour {
             timeSinceLastRunningAnimatorState = 0;
             var jumpVelocity = new Vector2(0f, jumpForce);
             myRigidBody.velocity = jumpVelocity;
-            myAnimator.SetBool("isJumping", true);
+            myAnimator.SetBool(IS_JUMPING_BOOLEAN, true);
             StartCoroutine(JumpCoolDown());
         }
     }
@@ -218,7 +246,7 @@ public class Player : MonoBehaviour {
     {
         timeSinceLastRunningAnimatorState -= Time.deltaTime;
 
-        bool isCurrentAnimatorStateRunning = myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Protagonist running"); 
+        bool isCurrentAnimatorStateRunning = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_RUNNING_STATE_NAME); 
 
         if (isCurrentAnimatorStateRunning)
         {
@@ -241,24 +269,24 @@ public class Player : MonoBehaviour {
         
         if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && rayCastHit.distance > distanceThresholdForFalling)
         {
-            myAnimator.SetBool("isJumping", false);
-            myAnimator.SetBool("isFalling", true);
+            myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
+            myAnimator.SetBool(IS_FALLING_BOOLEAN, true);
 
             if (timeSinceLastRunningAnimatorState > 0 && timePassedSinceJumpPressed > 0 && isJumpAvailable)
             {
-                myAnimator.SetTrigger("jumpAfterFalling");
+                myAnimator.SetTrigger(JUMP_AFTER_FALLING_TRIGGER);
                 Jump();
             }
         }
     }
 
-    // Detects if the player landed on an object that is tagged "Ground"
+    // Detects if the player landed on an object that is tagged "Ground" << TODO ?????? IT ACTUALLY DOESN'T, WANNA MAKE SURE THAT THIS COMMENT REALLY IS WRONG BEFORE DELETING...
     private void Land()
     {
-        myAnimator.SetBool("isShootingAirborneDownwards", false);
-        myAnimator.SetBool("isShootingAirborne", false);
-        myAnimator.SetBool("isFalling", false);
-        myAnimator.SetBool("isJumping", false);
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
+        myAnimator.SetBool(IS_FALLING_BOOLEAN, false);
+        myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CROUCH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -267,20 +295,20 @@ public class Player : MonoBehaviour {
     {
         if (downButton || altDownButton && IsGrounded())
         {
-            myAnimator.SetBool("isCrouching", true);
+            myAnimator.SetBool(IS_CROUCHING_BOOLEAN, true);
         }
         else
         {
-            myAnimator.SetBool("isCrouching", false);
+            myAnimator.SetBool(IS_CROUCHING_BOOLEAN, false);
         }
     }
 
     private void ClimbRope()
     {
-        bool isTouchingLadder = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Rope"));
+        bool isTouchingLadder = myCollider2D.IsTouchingLayers(LayerMask.GetMask(ROPE));
 
-        bool isShootingAirborne = myAnimator.GetBool("isShootingAirborne");
-        bool isShootingAirborneDownwards = myAnimator.GetBool("isShootingAirborneDownwards");
+        bool isShootingAirborne = myAnimator.GetBool(IS_SHOOTING_AIRBORNE_BOOLEAN);
+        bool isShootingAirborneDownwards = myAnimator.GetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN);
 
         bool isShootingAtAll = isShootingAirborne || isShootingAirborneDownwards || isShooting;
 
@@ -313,7 +341,7 @@ public class Player : MonoBehaviour {
             {
                 StartCoroutine(ClimbCoolDown());
             }
-            myAnimator.SetBool("isClimbing", false);
+            myAnimator.SetBool(IS_CLIMBING_BOOLEAN, false);
             isClimbing = false;
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
         }
@@ -329,9 +357,9 @@ public class Player : MonoBehaviour {
             StartCoroutine(ClimbCoolDown());
             myAnimator.enabled = true;
             isClimbing = false;
-            myAnimator.SetBool("isJumping", true);
+            myAnimator.SetBool(IS_JUMPING_BOOLEAN, true);
             FlipSprite(); // This is invoked on purpose, if not, there's a small frame of facing another direction
-            myAnimator.SetBool("isClimbing", false);
+            myAnimator.SetBool(IS_CLIMBING_BOOLEAN, false);
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
             var jumpVelocity = new Vector2(0f, jumpForceFromRope);
             myRigidBody.velocity = jumpVelocity;
@@ -347,15 +375,15 @@ public class Player : MonoBehaviour {
         isClimbing = true;
         myAnimator.enabled = true;
         myRigidBody.bodyType = RigidbodyType2D.Kinematic;
-        // This line of code was here for a while but it's likely that it's unnecessary ~> myAnimator.SetBool("isJumping", false);
-        myAnimator.SetBool("isRunning", false); // Making sure that running is cancelled or it might be stuck in running animation on ladder
-        myAnimator.SetBool("isClimbing", true);
+        // TODO This line of code was here for a while but it's likely that it's unnecessary ~> myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
+        myAnimator.SetBool(IS_RUNNING_BOOLEAN, false); // Making sure that running is cancelled or it might be stuck in running animation on ladder
+        myAnimator.SetBool(IS_CLIMBING_BOOLEAN, true);
     }
 
     private void Shoot()
     {
-        bool isFalling = myAnimator.GetBool("isFalling");
-        bool isJumping = myAnimator.GetBool("isJumping");
+        bool isFalling = myAnimator.GetBool(IS_FALLING_BOOLEAN);
+        bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
 
         timePassedSinceShotPressed -= Time.deltaTime;
         if (shotButton)
@@ -366,12 +394,12 @@ public class Player : MonoBehaviour {
         if (isShootingAvailable && !isClimbing)
         {
             // Shoot on ground
-            if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // && Mathf.Abs(velocity) < Mathf.Epsilon)
+            if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // TODO && Mathf.Abs(velocity) < Mathf.Epsilon) <- check if this can be deleted
             {
                 StartCoroutine(JumpCoolDown());
                 StartCoroutine(ShotCoolDown());
                 StopMovement();
-                myAnimator.SetBool("isShooting", true);
+                myAnimator.SetBool(IS_SHOOTING_BOOLEAN, true);
                 timePassedSinceShotPressed = 0;
             }
 
@@ -379,7 +407,7 @@ public class Player : MonoBehaviour {
             else if ((downButton || altDownButton) && timePassedSinceShotPressed > 0 && !IsGrounded())
             {
                 StartCoroutine(ShotCoolDown());
-                myAnimator.SetBool("isShootingAirborneDownwards", true);
+                myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, true);
                 timePassedSinceShotPressed = 0;
             }
 
@@ -387,7 +415,7 @@ public class Player : MonoBehaviour {
             else if (timePassedSinceShotPressed > 0 && !IsGrounded() && !isFalling)
             {
                 StartCoroutine(ShotCoolDown());
-                myAnimator.SetBool("isShootingAirborne", true);
+                myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, true);
                 timePassedSinceShotPressed = 0;
             }
         }
@@ -455,18 +483,18 @@ public class Player : MonoBehaviour {
 
     public void SetShootingAirborneFalse()
     {
-        myAnimator.SetBool("isShootingAirborne", false);
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
     }
 
     public void SetShootingAirborneDownwardsFalse()
     {
-        myAnimator.SetBool("isShootingAirborneDownwards", false);
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
     }
 
     public void SetShootingFalse()
     {
         isShooting = false;
-        myAnimator.SetBool("isShooting", false);
+        myAnimator.SetBool(IS_SHOOTING_BOOLEAN, false);
     }
 
     private void SetBulletDirectionHorizontal()
@@ -491,12 +519,12 @@ public class Player : MonoBehaviour {
 
     public void SetIsGroundedInAnimator()
     {
-        myAnimator.SetBool("isGrounded", IsGrounded());
+        myAnimator.SetBool(IS_GROUNDED_BOOLEAN, IsGrounded());
     }
 
     private void StopMovement()
     {
-        myAnimator.SetBool("isRunning", false);
+        myAnimator.SetBool(IS_RUNNING_BOOLEAN, false);
         myRigidBody.velocity = new Vector2(0f, 0f);
     }
 
@@ -508,10 +536,10 @@ public class Player : MonoBehaviour {
         // The angle of the ground
         float angle = Vector2.Angle(hit.normal, Vector2.up);
 
-        bool isJumping = myAnimator.GetBool("isJumping");
+        bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
 
         if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping
-                    && (Mathf.Abs(CrossPlatformInputManager.GetAxis("Horizontal")) <= Mathf.Epsilon || isShooting == true))
+                    && (Mathf.Abs(CrossPlatformInputManager.GetAxis(HORIZONTAL)) <= Mathf.Epsilon || isShooting == true))
         {
             myRigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
@@ -527,7 +555,7 @@ public class Player : MonoBehaviour {
         {
             isHit = true;
             health -= damage;
-            myAnimator.SetTrigger("hit");
+            myAnimator.SetTrigger(HIT_TRIGGER);
             HandleDeath();
             StartCoroutine(invincibilityCoolDown());
         }
@@ -562,7 +590,7 @@ public class Player : MonoBehaviour {
             HandleHit(otherGameObject.GetComponent<Hostile>().GetDamage());
         }
 
-        if (otherGameObject.tag.Equals("Ground"))
+        if (otherGameObject.tag.Equals(GROUND))
         {
             Land();
         }
@@ -573,7 +601,7 @@ public class Player : MonoBehaviour {
         var otherGameObject = other.gameObject;
 
         // Keeps the rope's position
-        if (otherGameObject.tag.Equals("Rope"))
+        if (otherGameObject.tag.Equals(ROPE))
         {
             ropeCenter = other.gameObject.transform.position;
         }
