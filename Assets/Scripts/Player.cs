@@ -250,16 +250,21 @@ public class Player : MonoBehaviour {
         bool isShootingAirborne = myAnimator.GetBool("isShootingAirborne");
         bool isShootingAirborneDownwards = myAnimator.GetBool("isShootingAirborneDownwards");
 
-        if(isTouchingLadder && !isShooting && !isShootingAirborne && !isShootingAirborneDownwards && isClimbingAvailable)
+        bool isShootingAtAll = isShootingAirborne || isShootingAirborneDownwards || isShooting;
+
+        bool isHoldingDownButton = downButton || altDownButton;
+        bool isHoldingUpButton = upButton || altUpButton;
+
+        if(isTouchingLadder && !isShootingAtAll && isClimbingAvailable)
         {
             JumpOffRope();
 
-            if ((upButton || altUpButton) && !downButton && !altDownButton && !IsGrounded())
+            if (isHoldingUpButton && !isHoldingDownButton && !IsGrounded())
             {
                 StartClimbing();
                 myRigidBody.velocity = new Vector2(0, climbingSpeed);
             }
-            else if ((downButton || altDownButton) && !upButton && !altUpButton && (IsGrounded() || isClimbing))
+            else if (isHoldingDownButton && !isHoldingUpButton && (IsGrounded() || isClimbing))
             {
                 StartClimbing();
                 myRigidBody.velocity = new Vector2(0, -climbingSpeed);
