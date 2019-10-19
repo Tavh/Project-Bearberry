@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 
     // Animator variables
     private const string IS_JUMPING_BOOLEAN = "isJumping";
-    private const string IS_RUNNING_BOOLEAN = "isRunning";
+    private const string IS_MOVING_BOOLEAN = "isMoving";
     private const string IS_FALLING_BOOLEAN = "isFalling";
     private const string IS_CLIMBING_BOOLEAN = "isClimbing";
     private const string IS_SHOOTING_BOOLEAN = "isShooting";
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour {
     [SerializeField] bool isClimbing;
     [SerializeField] bool isInvincible;
     [SerializeField] bool isHit;
-
+    [SerializeField] bool isGrounded;
     [SerializeField] float timePassedSinceShotPressed;
     [SerializeField] float timePassedSinceJumpPressed;
     // Helps detect falling off platform
@@ -135,6 +135,7 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate ()
     {
+        isGrounded = IsGrounded();
         CheckButtonInput();
 
         Move();
@@ -207,9 +208,9 @@ public class Player : MonoBehaviour {
 
             if (IsGrounded())
             {
-                bool playerHasHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
+                bool isPlayerHaveHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
                 bool isPressingMoveButtons = leftButton || altLeftButton || rightButton || altRightButton;
-                myAnimator.SetBool(IS_RUNNING_BOOLEAN, playerHasHorizontalVelocity || isPressingMoveButtons);
+                myAnimator.SetBool(IS_MOVING_BOOLEAN, isPlayerHaveHorizontalVelocity || isPressingMoveButtons);
             }
         }
     }
@@ -375,7 +376,7 @@ public class Player : MonoBehaviour {
         myAnimator.enabled = true;
         myRigidBody.bodyType = RigidbodyType2D.Kinematic;
         // TODO This line of code was here for a while but it's likely that it's unnecessary ~> myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
-        myAnimator.SetBool(IS_RUNNING_BOOLEAN, false); // Making sure that running is cancelled or it might be stuck in running animation on ladder
+        myAnimator.SetBool(IS_MOVING_BOOLEAN, false); // Making sure that running is cancelled or it might be stuck in running animation on ladder
         myAnimator.SetBool(IS_CLIMBING_BOOLEAN, true);
     }
 
@@ -523,7 +524,7 @@ public class Player : MonoBehaviour {
 
     private void StopMovement()
     {
-        myAnimator.SetBool(IS_RUNNING_BOOLEAN, false);
+        myAnimator.SetBool(IS_MOVING_BOOLEAN, false);
         myRigidBody.velocity = new Vector2(0f, 0f);
     }
 
