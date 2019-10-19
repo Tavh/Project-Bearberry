@@ -393,6 +393,8 @@ public class Player : MonoBehaviour {
 
         if (isShootingAvailable && !isClimbing)
         {
+            bool isPressingDown = downButton || altDownButton;
+
             // Shoot on ground
             if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // TODO && Mathf.Abs(velocity) < Mathf.Epsilon) <- check if this can be deleted
             {
@@ -404,7 +406,7 @@ public class Player : MonoBehaviour {
             }
 
             // Shoot in air downwards
-            else if ((downButton || altDownButton) && timePassedSinceShotPressed > 0 && !IsGrounded())
+            else if (isPressingDown && timePassedSinceShotPressed > 0 && (isJumping || isFalling))
             {
                 StartCoroutine(ShotCoolDown());
                 myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, true);
@@ -412,7 +414,7 @@ public class Player : MonoBehaviour {
             }
 
             // Shoot in air
-            else if (timePassedSinceShotPressed > 0 && !IsGrounded() && !isFalling)
+            else if (timePassedSinceShotPressed > 0 && isJumping && !isFalling)
             {
                 StartCoroutine(ShotCoolDown());
                 myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, true);
