@@ -117,7 +117,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 10
+  m_GravityScale: 11
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -169,8 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   runSpeed: 5
-  jumpForce: 14
-  jumpForceFromRope: 7
+  jumpForce: 15
+  jumpForceFromRope: 8
   speedThresholdForFalling: -0.9
   distanceThresholdForFalling: 2
   shotCooldown: 0.35
@@ -199,6 +199,7 @@ MonoBehaviour:
   isClimbing: 0
   isInvincible: 0
   isHit: 0
+  isGrounded: 0
   timePassedSinceShotPressed: 0
   timePassedSinceJumpPressed: 0
   timeSinceLastRunningAnimatorState: 0
