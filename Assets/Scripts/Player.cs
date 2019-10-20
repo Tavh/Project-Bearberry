@@ -148,7 +148,7 @@ public class Player : MonoBehaviour {
 
         CalculateTimeSinceLastRunningAnimatorState();
 
-        SetIsGroundedInAnimator();
+        ManageAnimatorState();
     }
 
     private void CheckButtonInput()
@@ -217,7 +217,8 @@ public class Player : MonoBehaviour {
                 bool isPressingMoveButtons = isPressingRightButton || isPressingLeftButton;
                 myAnimator.SetBool(IS_MOVING_BOOLEAN, isPlayerHaveHorizontalVelocity || isPressingMoveButtons);
             }
-        } else
+        }
+        else
         {
             myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
             myAnimator.SetFloat(SPEED_FLOAT, 0);
@@ -227,13 +228,15 @@ public class Player : MonoBehaviour {
 
     private void CheckForJump()
     {
+        bool isShootingInAnimator = myAnimator.GetBool(IS_SHOOTING_BOOLEAN);
+
         timePassedSinceJumpPressed -= Time.deltaTime;
         if (jumpButton)
         {
             timePassedSinceJumpPressed = maxTimeToKeepTrackOfLastJumpAttempt;
         }
 
-        if ((IsGrounded()) && isJumpAvailable) 
+        if ((IsGrounded()) && isJumpAvailable && !isShootingInAnimator) 
         {
             Jump();
         }
@@ -571,6 +574,23 @@ public class Player : MonoBehaviour {
             HandleDeath();
             StartCoroutine(invincibilityCoolDown());
         }
+    }
+
+    private void ManageAnimatorState()
+    {
+        SetIsGroundedInAnimator();
+
+        if (isHit)
+        {
+            ManageAnimatorStateWhileBeingHit();
+        }
+    }
+
+    private void ManageAnimatorStateWhileBeingHit()
+    {
+        isShooting = false;
+        myAnimator.SetBool(IS_SHOOTING_BOOLEAN, false);
+        myAnimator.SetBool(IS_MOVING_BOOLEAN, false);
     }
 
     public void StopHit()
