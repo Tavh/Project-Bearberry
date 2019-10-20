@@ -552,9 +552,10 @@ public class Player : MonoBehaviour {
         float angle = Vector2.Angle(hit.normal, Vector2.up);
 
         bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
+        bool isHasXVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
 
-        if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping
-                    && (Mathf.Abs(CrossPlatformInputManager.GetAxis(HORIZONTAL)) <= Mathf.Epsilon || isShooting == true))
+        if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping &&
+                    (!isHasXVelocity || isShooting == true))
         {
             myRigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
