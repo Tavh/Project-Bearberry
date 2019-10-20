@@ -198,7 +198,12 @@ public class Player : MonoBehaviour {
 
     private void Move()
     {
-        if (!isShooting && !isHit)
+        bool isPressingRightButton = rightButton || altRightButton;
+        bool isPressingLeftButton = leftButton || altLeftButton;
+
+        bool isPressingOnlyOneButton = isPressingRightButton ^ isPressingLeftButton;
+
+        if (!isShooting && !isHit && isPressingOnlyOneButton)
         {
             FlipSprite();
             float controlThrow = CrossPlatformInputManager.GetAxis(HORIZONTAL); // Value is between 1 and -1
@@ -209,9 +214,14 @@ public class Player : MonoBehaviour {
             if (IsGrounded())
             {
                 bool isPlayerHaveHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
-                bool isPressingMoveButtons = leftButton || altLeftButton || rightButton || altRightButton;
+                bool isPressingMoveButtons = isPressingRightButton || isPressingLeftButton;
                 myAnimator.SetBool(IS_MOVING_BOOLEAN, isPlayerHaveHorizontalVelocity || isPressingMoveButtons);
             }
+        } else
+        {
+            myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            myAnimator.SetFloat(SPEED_FLOAT, 0);
+            myAnimator.SetBool(IS_MOVING_BOOLEAN, false);
         }
     }
 
