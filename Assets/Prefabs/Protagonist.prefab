@@ -199,6 +199,7 @@ MonoBehaviour:
   isClimbing: 0
   isInvincible: 0
   isHit: 0
+  isSwitchToGroundShot: 0
   isGrounded: 0
   timePassedSinceShotPressed: 0
   timePassedSinceJumpPressed: 0
@@ -283,7 +284,7 @@ SpriteRenderer:
   m_SortingLayerID: -1573413183
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300004, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+  m_Sprite: {fileID: 21300004, guid: 2bf68a78e87e98f49b9f678c18b62632, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
