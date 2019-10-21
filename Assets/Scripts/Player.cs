@@ -28,7 +28,8 @@ public class Player : MonoBehaviour {
     // Animator state names
     private const string PROTAGONIST_RUNNING_STATE_NAME = "Protagonist running";
     private const string PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME = "Protagonist shooting airborne";
-    private const string PROTAGONIST_sHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME = "Protagonist shooting airborne downwards";
+    private const string PROTAGONIST_SHOOTING_AIRBORNE_FALLING_STATE_NAME = "Protagonist shooting airborne falling";
+    private const string PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME = "Protagonist shooting airborne downwards";
 
     // Tags and layers
     private const string GROUND = "Ground";
@@ -331,9 +332,10 @@ public class Player : MonoBehaviour {
         bool isTouchingLadder = myCollider2D.IsTouchingLayers(LayerMask.GetMask(ROPE));
 
         bool isShootingAirborneInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME);
-        bool isShootingAirborneDownwardsInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME);
+        bool isShootingAirborneDownwardsInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_FALLING_STATE_NAME);
+        bool isShootingAirborneDFallingInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME);
 
-        bool isShootingAtAll = isShootingAirborneInAnimator || isShootingAirborneDownwardsInAnimator || isShooting;
+        bool isShootingAtAll = isShootingAirborneInAnimator || isShootingAirborneDownwardsInAnimator || isShootingAirborneDFallingInAnimator || isShooting;
 
         bool isHoldingDownButton = downButton || altDownButton;
         bool isHoldingUpButton = upButton || altUpButton;
