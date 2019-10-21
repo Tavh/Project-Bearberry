@@ -426,7 +426,7 @@ public class Player : MonoBehaviour {
                 ShootAirborneDownwards();
             }
 
-            else if (timePassedSinceShotPressed > 0 && isJumping && !isFalling)
+            else if (timePassedSinceShotPressed > 0 && (isJumping || isFalling))
             {
                 ShootAirborne();
             }
