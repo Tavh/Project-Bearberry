@@ -298,13 +298,13 @@ public class Player : MonoBehaviour {
     private void Land()
     {
         myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
-
-       // if (isSwitchToGroundShot)
-       // {
-       //     myAnimator.SetTrigger("switchToGroundShooting");
-       //     isSwitchToGroundShot = false;
-       //     ShootOnGround();
-       // }
+     
+        if (isSwitchToGroundShot)
+        {
+            myAnimator.SetBool("isInterruptedGroundShooting", true);
+            isSwitchToGroundShot = false;
+            ShootOnGround();
+        }
 
         myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
 
@@ -542,6 +542,10 @@ public class Player : MonoBehaviour {
         isSwitchToGroundShot = true;
     }
 
+    public void SetIsInterruptedGroundShootingFalse()
+    {
+        myAnimator.SetBool("isInterruptedGroundShooting", false);
+    }
 
     private void SetBulletDirectionHorizontal()
     {
