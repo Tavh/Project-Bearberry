@@ -20,12 +20,15 @@ public class Player : MonoBehaviour {
     private const string IS_GROUNDED_BOOLEAN = "isGrounded";
     private const string IS_SHOOTING_AIRBORNE_BOOLEAN = "isShootingAirborne";
     private const string IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN = "isShootingAirborneDownwards";
+    private const string IS_INTERRUPTED_GROUND_SHOOTING = "isInterruptedGroundShooting";
     private const string SPEED_FLOAT = "speed";
     private const string JUMP_AFTER_FALLING_TRIGGER = "jumpAfterFalling";
     private const string HIT_TRIGGER = "hit";
 
     // Animator state names
     private const string PROTAGONIST_RUNNING_STATE_NAME = "Protagonist running";
+    private const string PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME = "Protagonist shooting airborne";
+    private const string PROTAGONIST_sHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME = "Protagonist shooting airborne downwards";
 
     // Tags and layers
     private const string GROUND = "Ground";
@@ -301,7 +304,7 @@ public class Player : MonoBehaviour {
      
         if (isSwitchToGroundShot)
         {
-            myAnimator.SetBool("isInterruptedGroundShooting", true);
+            myAnimator.SetBool(IS_INTERRUPTED_GROUND_SHOOTING, true);
             isSwitchToGroundShot = false;
             ShootOnGround();
         }
@@ -327,10 +330,10 @@ public class Player : MonoBehaviour {
     {
         bool isTouchingLadder = myCollider2D.IsTouchingLayers(LayerMask.GetMask(ROPE));
 
-        bool isShootingAirborne = myAnimator.GetBool(IS_SHOOTING_AIRBORNE_BOOLEAN);
-        bool isShootingAirborneDownwards = myAnimator.GetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN);
+        bool isShootingAirborneInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME);
+        bool isShootingAirborneDownwardsInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME);
 
-        bool isShootingAtAll = isShootingAirborne || isShootingAirborneDownwards || isShooting;
+        bool isShootingAtAll = isShootingAirborneInAnimator || isShootingAirborneDownwardsInAnimator || isShooting;
 
         bool isHoldingDownButton = downButton || altDownButton;
         bool isHoldingUpButton = upButton || altUpButton;
