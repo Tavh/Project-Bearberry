@@ -307,7 +307,7 @@ public class Player : MonoBehaviour {
         }
 
         myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
-
+        myAnimator.SetBool("isInterruptedGroundShooting", false);
         myAnimator.SetBool(IS_FALLING_BOOLEAN, false);
         myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
     }
@@ -658,7 +658,7 @@ public class Player : MonoBehaviour {
             HandleHit(otherGameObject.GetComponent<Hostile>().GetDamage());
         }
 
-        if (otherGameObject.tag.Equals(GROUND))
+        if (otherGameObject.tag.Equals(GROUND) && IsGrounded())
         {
             Land();
         }
