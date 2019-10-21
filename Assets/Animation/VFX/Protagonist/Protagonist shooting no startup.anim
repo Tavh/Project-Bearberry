@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Protagonist shooting airborne
+  m_Name: Protagonist shooting no startup
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -18,8 +18,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.25
-        value: {x: 0.655, y: -0.007, z: 0}
+        time: 0.033333335
+        value: {x: 0.635, y: 0.088, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -27,7 +27,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.5
+        time: 0.2
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -44,20 +44,16 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300050, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - time: 0.1
-      value: {fileID: 21300064, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - time: 0.2
-      value: {fileID: 21300064, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - time: 0.25
-      value: {fileID: 21300066, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - time: 0.45
-      value: {fileID: 21300066, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+      value: {fileID: 21300058, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+    - time: 0.033333335
+      value: {fileID: 21300060, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+    - time: 0.16666667
+      value: {fileID: 21300060, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
     attribute: m_Sprite
     path: Body
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 20
+  m_SampleRate: 30
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -79,22 +75,20 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300050, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - {fileID: 21300064, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - {fileID: 21300064, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - {fileID: 21300066, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
-    - {fileID: 21300066, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+    - {fileID: 21300058, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+    - {fileID: 21300060, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+    - {fileID: 21300060, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.2
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -109,8 +103,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.25
-        value: 0.655
+        time: 0.033333335
+        value: 0.635
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -118,7 +112,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
+        time: 0.2
         value: 0
         inSlope: 0
         outSlope: 0
@@ -137,8 +131,8 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.25
-        value: -0.007
+        time: 0.033333335
+        value: 0.088
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -146,7 +140,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
+        time: 0.2
         value: 0
         inSlope: 0
         outSlope: 0
@@ -165,7 +159,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.25
+        time: 0.033333335
         value: 0
         inSlope: 0
         outSlope: 0
@@ -174,7 +168,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.5
+        time: 0.2
         value: 0
         inSlope: 0
         outSlope: 0
@@ -195,42 +189,35 @@ AnimationClip:
   m_GenerateMotionCurves: 0
   m_Events:
   - time: 0
-    functionName: SetIsSwitchToGroundShotOnLandingTrue
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.2
-    functionName: SetBulletDirectionHorizontal
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.25
     functionName: InstantiateBullet
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
+  - time: 0
+    functionName: SetBulletDirectionHorizontal
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
+    functionName: 
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
     functionName: ReceiveKnockback
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
-    functionName: SetIsSwitchToGroundShotOnLandingFalse
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.45
-    functionName: SetShootingAirborneFalse
+  - time: 0.13333334
+    functionName: SetShootingFalse
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

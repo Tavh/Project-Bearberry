@@ -111,6 +111,7 @@ public class Player : MonoBehaviour {
     [SerializeField] bool isClimbing;
     [SerializeField] bool isInvincible;
     [SerializeField] bool isHit;
+    [SerializeField] bool isSwitchToGroundShot;
     [SerializeField] bool isGrounded;
     [SerializeField] float timePassedSinceShotPressed;
     [SerializeField] float timePassedSinceJumpPressed;
@@ -141,7 +142,7 @@ public class Player : MonoBehaviour {
         Move();
         CheckForJump();
         Fall();
-        Shoot();
+        ManageShooting();
         Crouch();
         HandleSlope();
         ClimbRope();
@@ -293,16 +294,23 @@ public class Player : MonoBehaviour {
         }
     }
 
-    // Detects if the player landed on an object that is tagged "Ground" << TODO ?????? IT ACTUALLY DOESN'T, WANNA MAKE SURE THAT THIS COMMENT REALLY IS WRONG BEFORE DELETING...
+    // Triggered by colission with an object tagged as ground
     private void Land()
     {
         myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
+
+       // if (isSwitchToGroundShot)
+       // {
+       //     myAnimator.SetTrigger("switchToGroundShooting");
+       //     isSwitchToGroundShot = false;
+       //     ShootOnGround();
+       // }
+
         myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
+
         myAnimator.SetBool(IS_FALLING_BOOLEAN, false);
         myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
     }
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CROUCH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private void Crouch()
     {
@@ -393,7 +401,7 @@ public class Player : MonoBehaviour {
         myAnimator.SetBool(IS_CLIMBING_BOOLEAN, true);
     }
 
-    private void Shoot()
+    private void ManageShooting()
     {
         bool isFalling = myAnimator.GetBool(IS_FALLING_BOOLEAN);
         bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
@@ -408,32 +416,44 @@ public class Player : MonoBehaviour {
         {
             bool isPressingDown = downButton || altDownButton;
 
-            // Shoot on ground
             if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // TODO && Mathf.Abs(velocity) < Mathf.Epsilon) <- check if this can be deleted
             {
-                StartCoroutine(JumpCoolDown());
-                StartCoroutine(ShotCoolDown());
-                StopMovement();
-                myAnimator.SetBool(IS_SHOOTING_BOOLEAN, true);
-                timePassedSinceShotPressed = 0;
+                ShootOnGround();
             }
 
-            // Shoot in air downwards
             else if (isPressingDown && timePassedSinceShotPressed > 0 && (isJumping || isFalling))
             {
-                StartCoroutine(ShotCoolDown());
-                myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, true);
-                timePassedSinceShotPressed = 0;
+                ShootAirborneDownwards();
             }
 
-            // Shoot in air
             else if (timePassedSinceShotPressed > 0 && isJumping && !isFalling)
             {
-                StartCoroutine(ShotCoolDown());
-                myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, true);
-                timePassedSinceShotPressed = 0;
+                ShootAirborne();
             }
         }
+    }
+
+    private void ShootOnGround()
+    {
+        StartCoroutine(JumpCoolDown());
+        StartCoroutine(ShotCoolDown());
+        StopMovement();
+        myAnimator.SetBool(IS_SHOOTING_BOOLEAN, true);
+        timePassedSinceShotPressed = 0;
+    }
+
+    private void ShootAirborneDownwards()
+    {
+        StartCoroutine(ShotCoolDown());
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, true);
+        timePassedSinceShotPressed = 0;
+    }
+
+    private void ShootAirborne()
+    {
+        StartCoroutine(ShotCoolDown());
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, true);
+        timePassedSinceShotPressed = 0;
     }
 
     public void ReceiveKnockback()
@@ -511,6 +531,17 @@ public class Player : MonoBehaviour {
         isShooting = false;
         myAnimator.SetBool(IS_SHOOTING_BOOLEAN, false);
     }
+
+    public void SetIsSwitchToGroundShotOnLandingFalse()
+    {
+        isSwitchToGroundShot = false;
+    }
+
+    public void SetIsSwitchToGroundShotOnLandingTrue()
+    {
+        isSwitchToGroundShot = true;
+    }
+
 
     private void SetBulletDirectionHorizontal()
     {
