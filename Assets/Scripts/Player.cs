@@ -27,9 +27,11 @@ public class Player : MonoBehaviour {
 
     // Animator state names
     private const string PROTAGONIST_RUNNING_STATE_NAME = "Protagonist running";
+    private const string PROTAGONIST_SHOOTING_STATE_NAME = "Protagonist shooting";
     private const string PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME = "Protagonist shooting airborne";
     private const string PROTAGONIST_SHOOTING_AIRBORNE_FALLING_STATE_NAME = "Protagonist shooting airborne falling";
     private const string PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME = "Protagonist shooting airborne downwards";
+    private const string PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME = "Protagonist shooting no startup";
 
     // Tags and layers
     private const string GROUND = "Ground";
@@ -208,7 +210,12 @@ public class Player : MonoBehaviour {
 
         bool isPressingOnlyOneButton = isPressingRightButton ^ isPressingLeftButton;
 
-        if (!isShooting && !isHit && isPressingOnlyOneButton)
+        bool isGroundShooting = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_STATE_NAME);
+        bool isGroundShootingNoStartup = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME);
+
+        bool isGroundShootingAtAll = isGroundShooting || isGroundShootingNoStartup;
+
+        if (!isGroundShootingAtAll && !isHit && isPressingOnlyOneButton)
         {
             FlipSprite();
             float controlThrow = CrossPlatformInputManager.GetAxis(HORIZONTAL); // Value is between 1 and -1
@@ -591,10 +598,15 @@ public class Player : MonoBehaviour {
         float angle = Vector2.Angle(hit.normal, Vector2.up);
 
         bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
-        bool isHasXVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
+        bool isPressingDirectionButtons = rightButton || altRightButton || leftButton || altLeftButton;
+
+        bool isGroundShooting = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_STATE_NAME);
+        bool isGroundShootingNoStartup = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME);
+
+        bool isGroundShootingAtAll = isGroundShooting || isGroundShootingNoStartup;
 
         if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping &&
-                    (!isHasXVelocity || isShooting == true))
+                    (!isPressingDirectionButtons || isGroundShootingAtAll))
         {
             myRigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
