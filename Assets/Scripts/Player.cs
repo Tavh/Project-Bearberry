@@ -609,7 +609,7 @@ public class Player : MonoBehaviour {
         float angle = Vector2.Angle(hit.normal, Vector2.up);
 
         bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
-        bool isPressingDirectionButtons = rightButton || altRightButton || leftButton || altLeftButton;
+        bool isPressingOnlyOneDirectionButton = (rightButton || altRightButton) ^ (leftButton || altLeftButton);
 
         bool isGroundShooting = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_STATE_NAME);
         bool isGroundShootingNoStartup = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME);
@@ -617,7 +617,7 @@ public class Player : MonoBehaviour {
         bool isGroundShootingAtAll = isGroundShooting || isGroundShootingNoStartup;
 
         if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping &&
-                    (!isPressingDirectionButtons || isGroundShootingAtAll))
+                    (!isPressingOnlyOneDirectionButton || isGroundShootingAtAll))
         {
             myRigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
