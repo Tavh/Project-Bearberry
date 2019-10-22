@@ -184,6 +184,8 @@ MonoBehaviour:
   ropeCenterPadding: 0.025
   minimalDistanceFromGround: 1
   invincibilityDuration: 1
+  groundedGravityScale: 19
+  airborneGravityScale: 10
   maxTimeToKeepTrackOfLastJumpAttempt: 0.15
   maxTimeToKeepTrackOfLastShotAttempt: 0.15
   maxTimeToKeepTrackOfLastRunToFallAnimatorTransition: 0.05
