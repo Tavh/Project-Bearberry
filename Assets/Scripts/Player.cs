@@ -56,7 +56,7 @@ public class Player : MonoBehaviour {
     // At what distance from the ground should the player switch to falling animation
     [SerializeField] float distanceThresholdForFalling = 2f;
     [SerializeField] float shotCooldown = 0.35f;
-    [SerializeField] float knockUpwardsFactor = 10f;
+    [SerializeField] float knockUpwardsFactor = 9f;
     [SerializeField] float shootKnockBackFactor = 0.2f;
     [SerializeField] float knockbackFactorAir = 7f;
     [SerializeField] float knockUpwardsCooldown = 0.3f;
@@ -75,6 +75,8 @@ public class Player : MonoBehaviour {
     [SerializeField] float minimalDistanceFromGround = 1f;
     // How long the player is immune from hits after being hit
     [SerializeField] float invincibilityDuration = 1f;
+    [SerializeField] float groundedGravityScale = 17.5f;
+    [SerializeField] float airborneGravityScale = 10f;
 
     [SerializeField] float maxTimeToKeepTrackOfLastJumpAttempt = 0.15f;
     [SerializeField] float maxTimeToKeepTrackOfLastShotAttempt = 0.15f;
@@ -238,6 +240,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void SetCharacterGravity(float newGravity)
+    {
+        myRigidBody.gravityScale = newGravity;
+    }
+
     private void CheckForJump()
     {
         bool isShootingInAnimator = myAnimator.GetBool(IS_SHOOTING_BOOLEAN);
@@ -258,6 +265,7 @@ public class Player : MonoBehaviour {
     {
         if (timePassedSinceJumpPressed > 0)
         {
+            SetCharacterGravity(airborneGravityScale);
             timePassedSinceJumpPressed = 0;
             timeSinceLastRunningAnimatorState = 0;
             var jumpVelocity = new Vector2(0f, jumpForce);
@@ -294,6 +302,7 @@ public class Player : MonoBehaviour {
         
         if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && rayCastHit.distance > distanceThresholdForFalling)
         {
+            SetCharacterGravity(airborneGravityScale);
             myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
             myAnimator.SetBool(IS_FALLING_BOOLEAN, true);
 
@@ -309,7 +318,9 @@ public class Player : MonoBehaviour {
     private void Land()
     {
         myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
-     
+
+        SetCharacterGravity(groundedGravityScale);
+
         if (isSwitchToGroundShot)
         {
             myAnimator.SetBool(IS_INTERRUPTED_GROUND_SHOOTING, true);
