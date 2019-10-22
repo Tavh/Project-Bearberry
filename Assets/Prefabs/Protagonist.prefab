@@ -174,7 +174,7 @@ MonoBehaviour:
   speedThresholdForFalling: -0.9
   distanceThresholdForFalling: 2
   shotCooldown: 0.35
-  knockUpwardsFactor: 10
+  knockUpwardsFactor: 9
   shootKnockBackFactor: 0.2
   knockbackFactorAir: 7
   knockUpwardsCooldown: 0.3
@@ -184,6 +184,8 @@ MonoBehaviour:
   ropeCenterPadding: 0.025
   minimalDistanceFromGround: 1
   invincibilityDuration: 1
+  groundedGravityScale: 19
+  airborneGravityScale: 10
   maxTimeToKeepTrackOfLastJumpAttempt: 0.15
   maxTimeToKeepTrackOfLastShotAttempt: 0.15
   maxTimeToKeepTrackOfLastRunToFallAnimatorTransition: 0.05
@@ -199,6 +201,8 @@ MonoBehaviour:
   isClimbing: 0
   isInvincible: 0
   isHit: 0
+  isSwitchToGroundShot: 0
+  isGrounded: 0
   timePassedSinceShotPressed: 0
   timePassedSinceJumpPressed: 0
   timeSinceLastRunningAnimatorState: 0
@@ -282,7 +286,7 @@ SpriteRenderer:
   m_SortingLayerID: -1573413183
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300004, guid: 4b457d97cc7a23a4aa133085ec4035bc, type: 3}
+  m_Sprite: {fileID: 21300004, guid: 2bf68a78e87e98f49b9f678c18b62632, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

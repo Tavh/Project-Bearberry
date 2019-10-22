@@ -5,10 +5,44 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour {
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constants ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // Important and re-occuring values
     private const float JUMP_COOL_DOWN_VALUE = 0.1f;
-    
+
+    // Animator variables
+    private const string IS_JUMPING_BOOLEAN = "isJumping";
+    private const string IS_MOVING_BOOLEAN = "isMoving";
+    private const string IS_FALLING_BOOLEAN = "isFalling";
+    private const string IS_CLIMBING_BOOLEAN = "isClimbing";
+    private const string IS_SHOOTING_BOOLEAN = "isShooting";
+    private const string IS_CROUCHING_BOOLEAN = "isCrouching";
+    private const string IS_GROUNDED_BOOLEAN = "isGrounded";
+    private const string IS_SHOOTING_AIRBORNE_BOOLEAN = "isShootingAirborne";
+    private const string IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN = "isShootingAirborneDownwards";
+    private const string IS_INTERRUPTED_GROUND_SHOOTING = "isInterruptedGroundShooting";
+    private const string SPEED_FLOAT = "speed";
+    private const string JUMP_AFTER_FALLING_TRIGGER = "jumpAfterFalling";
+    private const string HIT_TRIGGER = "hit";
+
+    // Animator state names
+    private const string PROTAGONIST_RUNNING_STATE_NAME = "Protagonist running";
+    private const string PROTAGONIST_SHOOTING_STATE_NAME = "Protagonist shooting";
+    private const string PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME = "Protagonist shooting airborne";
+    private const string PROTAGONIST_SHOOTING_AIRBORNE_FALLING_STATE_NAME = "Protagonist shooting airborne falling";
+    private const string PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME = "Protagonist shooting airborne downwards";
+    private const string PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME = "Protagonist shooting no startup";
+
+    // Tags and layers
+    private const string GROUND = "Ground";
+    private const string ROPE = "Rope";
+
+    // ETC
+    private const string HORIZONTAL = "Horizontal";
+
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Configuration parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+
     // ** IT'S A GOOD IDEA TO MATCH ALL THE INITIAL VALUES TO THE VALUES WE'RE ACTUALLY USING IN THE END **
 
     // Not serialized because it's an important value that should be controlled through a constant value
@@ -22,7 +56,7 @@ public class Player : MonoBehaviour {
     // At what distance from the ground should the player switch to falling animation
     [SerializeField] float distanceThresholdForFalling = 2f;
     [SerializeField] float shotCooldown = 0.35f;
-    [SerializeField] float knockUpwardsFactor = 10f;
+    [SerializeField] float knockUpwardsFactor = 9f;
     [SerializeField] float shootKnockBackFactor = 0.2f;
     [SerializeField] float knockbackFactorAir = 7f;
     [SerializeField] float knockUpwardsCooldown = 0.3f;
@@ -41,6 +75,8 @@ public class Player : MonoBehaviour {
     [SerializeField] float minimalDistanceFromGround = 1f;
     // How long the player is immune from hits after being hit
     [SerializeField] float invincibilityDuration = 1f;
+    [SerializeField] float groundedGravityScale = 17.5f;
+    [SerializeField] float airborneGravityScale = 10f;
 
     [SerializeField] float maxTimeToKeepTrackOfLastJumpAttempt = 0.15f;
     [SerializeField] float maxTimeToKeepTrackOfLastShotAttempt = 0.15f;
@@ -83,7 +119,8 @@ public class Player : MonoBehaviour {
     [SerializeField] bool isClimbing;
     [SerializeField] bool isInvincible;
     [SerializeField] bool isHit;
-
+    [SerializeField] bool isSwitchToGroundShot;
+    [SerializeField] bool isGrounded;
     [SerializeField] float timePassedSinceShotPressed;
     [SerializeField] float timePassedSinceJumpPressed;
     // Helps detect falling off platform
@@ -107,19 +144,20 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate ()
     {
+        isGrounded = IsGrounded();
         CheckButtonInput();
 
         Move();
         CheckForJump();
         Fall();
-        Shoot();
+        ManageShooting();
         Crouch();
         HandleSlope();
         ClimbRope();
 
         CalculateTimeSinceLastRunningAnimatorState();
 
-        SetIsGroundedInAnimator();
+        ManageAnimatorState();
     }
 
     private void CheckButtonInput()
@@ -157,7 +195,7 @@ public class Player : MonoBehaviour {
     { 
         RaycastHit2D rayCastHit = Physics2D.Raycast(transform.position, Vector2.down);
 
-        bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isTouchingGround = myCollider2D.IsTouchingLayers(LayerMask.GetMask(GROUND));
 
         if (isTouchingGround && rayCastHit.distance < this.minimalDistanceFromGround)
         {
@@ -169,32 +207,55 @@ public class Player : MonoBehaviour {
 
     private void Move()
     {
-        if (!isShooting && !isHit)
+        bool isPressingRightButton = rightButton || altRightButton;
+        bool isPressingLeftButton = leftButton || altLeftButton;
+
+        bool isPressingOnlyOneButton = isPressingRightButton ^ isPressingLeftButton;
+
+        bool isGroundShooting = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_STATE_NAME);
+        bool isGroundShootingNoStartup = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME);
+
+        bool isGroundShootingAtAll = isGroundShooting || isGroundShootingNoStartup;
+
+        if (!isGroundShootingAtAll && !isHit && isPressingOnlyOneButton)
         {
             FlipSprite();
-            float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); // value is between 1 and -1
+            float controlThrow = CrossPlatformInputManager.GetAxis(HORIZONTAL); // Value is between 1 and -1
             Vector2 playerVelocity = new Vector2(controlThrow * runSpeed, myRigidBody.velocity.y);
             myRigidBody.velocity = playerVelocity;
-            myAnimator.SetFloat("speed", Mathf.Abs(controlThrow));
+            myAnimator.SetFloat(SPEED_FLOAT, Mathf.Abs(controlThrow));
 
             if (IsGrounded())
             {
-                bool playerHasHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
-                bool isPressingMoveButtons = leftButton || altLeftButton || rightButton || altRightButton;
-                myAnimator.SetBool("isRunning", playerHasHorizontalVelocity || isPressingMoveButtons);
+                bool isPlayerHaveHorizontalVelocity = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
+                bool isPressingMoveButtons = isPressingRightButton || isPressingLeftButton;
+                myAnimator.SetBool(IS_MOVING_BOOLEAN, isPlayerHaveHorizontalVelocity || isPressingMoveButtons);
             }
         }
+        else
+        {
+            myRigidBody.velocity = new Vector2(0, myRigidBody.velocity.y);
+            myAnimator.SetFloat(SPEED_FLOAT, 0);
+            myAnimator.SetBool(IS_MOVING_BOOLEAN, false);
+        }
+    }
+
+    private void SetCharacterGravity(float newGravity)
+    {
+        myRigidBody.gravityScale = newGravity;
     }
 
     private void CheckForJump()
     {
+        bool isShootingInAnimator = myAnimator.GetBool(IS_SHOOTING_BOOLEAN);
+
         timePassedSinceJumpPressed -= Time.deltaTime;
         if (jumpButton)
         {
             timePassedSinceJumpPressed = maxTimeToKeepTrackOfLastJumpAttempt;
         }
 
-        if ((IsGrounded()) && isJumpAvailable) 
+        if ((IsGrounded()) && isJumpAvailable && !isShootingInAnimator) 
         {
             Jump();
         }
@@ -204,12 +265,12 @@ public class Player : MonoBehaviour {
     {
         if (timePassedSinceJumpPressed > 0)
         {
+            SetCharacterGravity(airborneGravityScale);
             timePassedSinceJumpPressed = 0;
             timeSinceLastRunningAnimatorState = 0;
             var jumpVelocity = new Vector2(0f, jumpForce);
             myRigidBody.velocity = jumpVelocity;
-            myAnimator.SetBool("isRunning", false);
-            myAnimator.SetBool("isJumping", true);
+            myAnimator.SetBool(IS_JUMPING_BOOLEAN, true);
             StartCoroutine(JumpCoolDown());
         }
     }
@@ -218,7 +279,7 @@ public class Player : MonoBehaviour {
     {
         timeSinceLastRunningAnimatorState -= Time.deltaTime;
 
-        bool isCurrentAnimatorStateRunning = myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Protagonist running"); 
+        bool isCurrentAnimatorStateRunning = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_RUNNING_STATE_NAME); 
 
         if (isCurrentAnimatorStateRunning)
         {
@@ -241,49 +302,58 @@ public class Player : MonoBehaviour {
         
         if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && rayCastHit.distance > distanceThresholdForFalling)
         {
-            myAnimator.SetBool("isRunning", false);
-            myAnimator.SetBool("isJumping", false);
-            myAnimator.SetBool("isFalling", true);
+            SetCharacterGravity(airborneGravityScale);
+            myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
+            myAnimator.SetBool(IS_FALLING_BOOLEAN, true);
 
             if (timeSinceLastRunningAnimatorState > 0 && timePassedSinceJumpPressed > 0 && isJumpAvailable)
             {
-                myAnimator.SetTrigger("jumpAfterFalling");
+                myAnimator.SetTrigger(JUMP_AFTER_FALLING_TRIGGER);
                 Jump();
             }
         }
     }
 
-    // Detects if the player landed on an object that is tagged "Ground"
+    // Triggered by colission with an object tagged as ground
     private void Land()
     {
-        myAnimator.SetBool("isShootingAirborneDownwards", false);
-        myAnimator.SetBool("isShootingAirborne", false);
-        myAnimator.SetBool("isFalling", false);
-        myAnimator.SetBool("isJumping", false);
-    }
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CROUCH ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        SetCharacterGravity(groundedGravityScale);
+
+        if (isSwitchToGroundShot)
+        {
+            myAnimator.SetBool(IS_INTERRUPTED_GROUND_SHOOTING, true);
+            isSwitchToGroundShot = false;
+            ShootOnGround();
+        }
+
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
+        myAnimator.SetBool(IS_FALLING_BOOLEAN, false);
+        myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
+    }
 
     private void Crouch()
     {
         if (downButton || altDownButton && IsGrounded())
         {
-            myAnimator.SetBool("isCrouching", true);
+            myAnimator.SetBool(IS_CROUCHING_BOOLEAN, true);
         }
         else
         {
-            myAnimator.SetBool("isCrouching", false);
+            myAnimator.SetBool(IS_CROUCHING_BOOLEAN, false);
         }
     }
 
     private void ClimbRope()
     {
-        bool isTouchingLadder = myCollider2D.IsTouchingLayers(LayerMask.GetMask("Rope"));
+        bool isTouchingLadder = myCollider2D.IsTouchingLayers(LayerMask.GetMask(ROPE));
 
-        bool isShootingAirborne = myAnimator.GetBool("isShootingAirborne");
-        bool isShootingAirborneDownwards = myAnimator.GetBool("isShootingAirborneDownwards");
+        bool isShootingAirborneInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_STATE_NAME);
+        bool isShootingAirborneDownwardsInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_FALLING_STATE_NAME);
+        bool isShootingAirborneDFallingInAnimator = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_AIRBORNE_DOWNWARDS_STATE_NAME);
 
-        bool isShootingAtAll = isShootingAirborne || isShootingAirborneDownwards || isShooting;
+        bool isShootingAtAll = isShootingAirborneInAnimator || isShootingAirborneDownwardsInAnimator || isShootingAirborneDFallingInAnimator || isShooting;
 
         bool isHoldingDownButton = downButton || altDownButton;
         bool isHoldingUpButton = upButton || altUpButton;
@@ -310,9 +380,12 @@ public class Player : MonoBehaviour {
         }
         else
         {
-            myAnimator.SetBool("isClimbing", false);
+            if (isClimbing == true)
+            {
+                StartCoroutine(ClimbCoolDown());
+            }
+            myAnimator.SetBool(IS_CLIMBING_BOOLEAN, false);
             isClimbing = false;
-            StartCoroutine(ClimbCoolDown());
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
         }
     }
@@ -327,9 +400,9 @@ public class Player : MonoBehaviour {
             StartCoroutine(ClimbCoolDown());
             myAnimator.enabled = true;
             isClimbing = false;
-            myAnimator.SetBool("isJumping", true);
-            FlipSprite();
-            myAnimator.SetBool("isClimbing", false);
+            myAnimator.SetBool(IS_JUMPING_BOOLEAN, true);
+            FlipSprite(); // This is invoked on purpose, if not, there's a small frame of facing another direction
+            myAnimator.SetBool(IS_CLIMBING_BOOLEAN, false);
             myRigidBody.bodyType = RigidbodyType2D.Dynamic;
             var jumpVelocity = new Vector2(0f, jumpForceFromRope);
             myRigidBody.velocity = jumpVelocity;
@@ -345,15 +418,15 @@ public class Player : MonoBehaviour {
         isClimbing = true;
         myAnimator.enabled = true;
         myRigidBody.bodyType = RigidbodyType2D.Kinematic;
-        myAnimator.SetBool("isJumping", false);
-        myAnimator.SetBool("isRunning", false);
-        myAnimator.SetBool("isClimbing", true);
+        // TODO This line of code was here for a while but it's likely that it's unnecessary ~> myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
+        myAnimator.SetBool(IS_MOVING_BOOLEAN, false); // Making sure that running is cancelled or it might be stuck in running animation on ladder
+        myAnimator.SetBool(IS_CLIMBING_BOOLEAN, true);
     }
 
-    private void Shoot()
+    private void ManageShooting()
     {
-        bool isFalling = myAnimator.GetBool("isFalling");
-        bool isJumping = myAnimator.GetBool("isJumping");
+        bool isFalling = myAnimator.GetBool(IS_FALLING_BOOLEAN);
+        bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
 
         timePassedSinceShotPressed -= Time.deltaTime;
         if (shotButton)
@@ -363,32 +436,46 @@ public class Player : MonoBehaviour {
 
         if (isShootingAvailable && !isClimbing)
         {
-            // Shoot on ground
-            if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // && Mathf.Abs(velocity) < Mathf.Epsilon)
+            bool isPressingDown = downButton || altDownButton;
+
+            if (timePassedSinceShotPressed > 0 && IsGrounded() && !isJumping) // TODO && Mathf.Abs(velocity) < Mathf.Epsilon) <- check if this can be deleted
             {
-                StartCoroutine(JumpCoolDown());
-                StartCoroutine(ShotCoolDown());
-                StopMovement();
-                myAnimator.SetBool("isShooting", true);
-                timePassedSinceShotPressed = 0;
+                ShootOnGround();
             }
 
-            // Shoot in air downwards
-            else if ((downButton || altDownButton) && timePassedSinceShotPressed > 0 && !IsGrounded())
+            else if (isPressingDown && timePassedSinceShotPressed > 0 && (isJumping || isFalling))
             {
-                StartCoroutine(ShotCoolDown());
-                myAnimator.SetBool("isShootingAirborneDownwards", true);
-                timePassedSinceShotPressed = 0;
+                ShootAirborneDownwards();
             }
 
-            // Shoot in air
-            else if (timePassedSinceShotPressed > 0 && !IsGrounded() && !isFalling)
+            else if (timePassedSinceShotPressed > 0 && (isJumping || isFalling))
             {
-                StartCoroutine(ShotCoolDown());
-                myAnimator.SetBool("isShootingAirborne", true);
-                timePassedSinceShotPressed = 0;
+                ShootAirborne();
             }
         }
+    }
+
+    private void ShootOnGround()
+    {
+        StartCoroutine(JumpCoolDown());
+        StartCoroutine(ShotCoolDown());
+        StopMovement();
+        myAnimator.SetBool(IS_SHOOTING_BOOLEAN, true);
+        timePassedSinceShotPressed = 0;
+    }
+
+    private void ShootAirborneDownwards()
+    {
+        StartCoroutine(ShotCoolDown());
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, true);
+        timePassedSinceShotPressed = 0;
+    }
+
+    private void ShootAirborne()
+    {
+        StartCoroutine(ShotCoolDown());
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, true);
+        timePassedSinceShotPressed = 0;
     }
 
     public void ReceiveKnockback()
@@ -453,18 +540,33 @@ public class Player : MonoBehaviour {
 
     public void SetShootingAirborneFalse()
     {
-        myAnimator.SetBool("isShootingAirborne", false);
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_BOOLEAN, false);
     }
 
     public void SetShootingAirborneDownwardsFalse()
     {
-        myAnimator.SetBool("isShootingAirborneDownwards", false);
+        myAnimator.SetBool(IS_SHOOTING_AIRBORNE_DOWNWARDS_BOOLEAN, false);
     }
 
     public void SetShootingFalse()
     {
         isShooting = false;
-        myAnimator.SetBool("isShooting", false);
+        myAnimator.SetBool(IS_SHOOTING_BOOLEAN, false);
+    }
+
+    public void SetIsSwitchToGroundShotOnLandingFalse()
+    {
+        isSwitchToGroundShot = false;
+    }
+
+    public void SetIsSwitchToGroundShotOnLandingTrue()
+    {
+        isSwitchToGroundShot = true;
+    }
+
+    public void SetIsInterruptedGroundShootingFalse()
+    {
+        myAnimator.SetBool("isInterruptedGroundShooting", false);
     }
 
     private void SetBulletDirectionHorizontal()
@@ -489,12 +591,12 @@ public class Player : MonoBehaviour {
 
     public void SetIsGroundedInAnimator()
     {
-        myAnimator.SetBool("isGrounded", IsGrounded());
+        myAnimator.SetBool(IS_GROUNDED_BOOLEAN, IsGrounded());
     }
 
     private void StopMovement()
     {
-        myAnimator.SetBool("isRunning", false);
+        myAnimator.SetBool(IS_MOVING_BOOLEAN, false);
         myRigidBody.velocity = new Vector2(0f, 0f);
     }
 
@@ -506,10 +608,16 @@ public class Player : MonoBehaviour {
         // The angle of the ground
         float angle = Vector2.Angle(hit.normal, Vector2.up);
 
-        bool isJumping = myAnimator.GetBool("isJumping");
+        bool isJumping = myAnimator.GetBool(IS_JUMPING_BOOLEAN);
+        bool isPressingOnlyOneDirectionButton = (rightButton || altRightButton) ^ (leftButton || altLeftButton);
 
-        if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping
-                    && (Mathf.Abs(CrossPlatformInputManager.GetAxis("Horizontal")) <= Mathf.Epsilon || isShooting == true))
+        bool isGroundShooting = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_STATE_NAME);
+        bool isGroundShootingNoStartup = myAnimator.GetCurrentAnimatorStateInfo(0).IsName(PROTAGONIST_SHOOTING_NO_STARTUP_STATE_NAME);
+
+        bool isGroundShootingAtAll = isGroundShooting || isGroundShootingNoStartup;
+
+        if (IsGrounded() && angle >= Mathf.Abs(1) && !isJumping &&
+                    (!isPressingOnlyOneDirectionButton || isGroundShootingAtAll))
         {
             myRigidBody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
@@ -525,10 +633,27 @@ public class Player : MonoBehaviour {
         {
             isHit = true;
             health -= damage;
-            myAnimator.SetTrigger("hit");
+            myAnimator.SetTrigger(HIT_TRIGGER);
             HandleDeath();
             StartCoroutine(invincibilityCoolDown());
         }
+    }
+
+    private void ManageAnimatorState()
+    {
+        SetIsGroundedInAnimator();
+
+        if (isHit)
+        {
+            ManageAnimatorStateWhileBeingHit();
+        }
+    }
+
+    private void ManageAnimatorStateWhileBeingHit()
+    {
+        isShooting = false;
+        myAnimator.SetBool(IS_SHOOTING_BOOLEAN, false);
+        myAnimator.SetBool(IS_MOVING_BOOLEAN, false);
     }
 
     public void StopHit()
@@ -560,7 +685,7 @@ public class Player : MonoBehaviour {
             HandleHit(otherGameObject.GetComponent<Hostile>().GetDamage());
         }
 
-        if (otherGameObject.tag.Equals("Ground"))
+        if (otherGameObject.tag.Equals(GROUND) && IsGrounded())
         {
             Land();
         }
@@ -571,7 +696,7 @@ public class Player : MonoBehaviour {
         var otherGameObject = other.gameObject;
 
         // Keeps the rope's position
-        if (otherGameObject.tag.Equals("Rope"))
+        if (otherGameObject.tag.Equals(ROPE))
         {
             ropeCenter = other.gameObject.transform.position;
         }
