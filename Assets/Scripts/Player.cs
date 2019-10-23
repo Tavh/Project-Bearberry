@@ -300,7 +300,7 @@ public class Player : MonoBehaviour {
     {
         RaycastHit2D rayCastHit = Physics2D.Raycast(transform.position, Vector2.down);
         
-        if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && rayCastHit.distance > distanceThresholdForFalling)
+        if (myRigidBody.velocity.y < speedThresholdForFalling && !IsGrounded() && !isClimbing && (rayCastHit.distance > distanceThresholdForFalling || rayCastHit.collider == null))
         {
             SetCharacterGravity(airborneGravityScale);
             myAnimator.SetBool(IS_JUMPING_BOOLEAN, false);
